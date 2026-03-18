@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- saved from url=(0041)file:///Users/andres/Downloads/index.html -->
-<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="es">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mi Biblioteca</title>
-<link href="./Mi Biblioteca_files/css2" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; color: #1a1a1a; }
@@ -90,14 +90,9 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
   <div class="lib-header">
     <h1>Mi Biblioteca</h1>
     <p>Registro personal de lecturas</p>
-    <div class="sync-status sync-ok" id="syncStatus">✓ Sincronizado</div>
+    <div class="sync-status" id="syncStatus"></div>
   </div>
-  <div class="stats-row" id="statsRow">
-    <div class="stat-card"><div class="stat-num">11</div><div class="stat-label">Total</div></div>
-    <div class="stat-card"><div class="stat-num" style="color:#1D9E75">3</div><div class="stat-label">Leyendo</div></div>
-    <div class="stat-card"><div class="stat-num" style="color:#534AB7">4</div><div class="stat-label">Terminados</div></div>
-    <div class="stat-card"><div class="stat-num" style="color:#888780">0</div><div class="stat-label">Pendientes</div></div>
-    <div class="stat-card"><div class="stat-num" style="color:#BA7517">4</div><div class="stat-label">Recomendados</div></div></div>
+  <div class="stats-row" id="statsRow"></div>
   <div class="lib-controls">
     <input type="text" id="searchInput" placeholder="Buscar por título o autor..." oninput="renderBooks()">
     <select id="filterStatus" onchange="renderBooks()">
@@ -110,205 +105,7 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
     <button class="btn-config" onclick="openConfig()">⚙ API Key</button>
     <button class="btn-add" onclick="openModal()">+ Agregar libro</button>
   </div>
-  <div class="books-grid" id="booksGrid">
-    <div class="book-card status-reading">
-      <div class="book-status-bar"></div>
-      <div class="book-title">The Magic Mountain</div>
-      <div class="book-author">Thomas Mann</div>
-      <div class="book-meta">
-        <span class="badge badge-reading">Leyendo</span>
-        <span class="badge badge-format">Papel</span>
-        <span class="badge badge-format">Inglés</span>
-      </div>
-      
-      <div class="book-description">Novela filosófica monumental ambientada en un sanatorio suizo antes de la Primera Guerra Mundial, donde Hans Castorp reflexiona sobre el tiempo, la enfermedad y la condición humana.</div>
-      
-      <div class="book-notes">En curso.</div>
-      <div class="book-actions">
-        <button class="btn-sm" onclick="window.editBook(&#39;1&#39;)">Editar</button>
-        <button class="btn-sm btn-del" onclick="window.deleteBook(&#39;1&#39;)">Eliminar</button>
-      </div>
-    </div>
-    <div class="book-card status-recommended">
-      <div class="book-status-bar"></div>
-      <div class="book-title">The Age of AI</div>
-      <div class="book-author">Kissinger, Schmidt &amp; Huttenlocher</div>
-      <div class="book-meta">
-        <span class="badge badge-recommended">Recomendado</span>
-        <span class="badge badge-format">Kindle</span>
-        <span class="badge badge-format">Inglés</span>
-      </div>
-      
-      <div class="book-description">Tres perspectivas sobre cómo la inteligencia artificial transforma la sociedad, la geopolítica y el significado de ser humano.</div>
-      <div class="book-rec-source">Recomendado por <span>Claude</span> · Conversación sobre literatura e IA — marzo 2026</div>
-      
-      <div class="book-actions">
-        <button class="btn-sm" onclick="window.editBook(&#39;10&#39;)">Editar</button>
-        <button class="btn-sm btn-del" onclick="window.deleteBook(&#39;10&#39;)">Eliminar</button>
-      </div>
-    </div>
-    <div class="book-card status-recommended">
-      <div class="book-status-bar"></div>
-      <div class="book-title">Human Compatible</div>
-      <div class="book-author">Stuart Russell</div>
-      <div class="book-meta">
-        <span class="badge badge-recommended">Recomendado</span>
-        <span class="badge badge-format">Kindle</span>
-        <span class="badge badge-format">Inglés</span>
-      </div>
-      
-      <div class="book-description">El pionero de la IA Stuart Russell argumenta que debemos rediseñar la IA desde sus fundamentos para garantizar que sea compatible con los valores humanos.</div>
-      <div class="book-rec-source">Recomendado por <span>Claude</span> · Conversación sobre literatura e IA — marzo 2026</div>
-      
-      <div class="book-actions">
-        <button class="btn-sm" onclick="window.editBook(&#39;11&#39;)">Editar</button>
-        <button class="btn-sm btn-del" onclick="window.deleteBook(&#39;11&#39;)">Eliminar</button>
-      </div>
-    </div>
-    <div class="book-card status-reading">
-      <div class="book-status-bar"></div>
-      <div class="book-title">Exodus</div>
-      <div class="book-author">Peter F. Hamilton</div>
-      <div class="book-meta">
-        <span class="badge badge-reading">Leyendo</span>
-        <span class="badge badge-format">Kindle</span>
-        <span class="badge badge-format">Inglés</span>
-      </div>
-      
-      
-      
-      <div class="book-notes">En curso.</div>
-      <div class="book-actions">
-        <button class="btn-sm" onclick="window.editBook(&#39;2&#39;)">Editar</button>
-        <button class="btn-sm btn-del" onclick="window.deleteBook(&#39;2&#39;)">Eliminar</button>
-      </div>
-    </div>
-    <div class="book-card status-reading">
-      <div class="book-status-bar"></div>
-      <div class="book-title">Keith Jarrett: A Biography</div>
-      <div class="book-author">Wolfgang Sandner</div>
-      <div class="book-meta">
-        <span class="badge badge-reading">Leyendo</span>
-        <span class="badge badge-format">Papel</span>
-        <span class="badge badge-format">Inglés</span>
-      </div>
-      
-      <div class="book-description">Biografía del pianista de jazz Keith Jarrett, explorando su vida, su proceso creativo y las circunstancias legendarias detrás de grabaciones como The Köln Concert.</div>
-      
-      <div class="book-notes">Favorito: The Köln Concert.</div>
-      <div class="book-actions">
-        <button class="btn-sm" onclick="window.editBook(&#39;3&#39;)">Editar</button>
-        <button class="btn-sm btn-del" onclick="window.deleteBook(&#39;3&#39;)">Eliminar</button>
-      </div>
-    </div>
-    <div class="book-card status-done">
-      <div class="book-status-bar"></div>
-      <div class="book-title">The Remains of the Day</div>
-      <div class="book-author">Kazuo Ishiguro</div>
-      <div class="book-meta">
-        <span class="badge badge-done">Terminado</span>
-        <span class="badge badge-format">Papel</span>
-        <span class="badge badge-format">Inglés</span>
-      </div>
-      <div class="book-stars">★★★★★</div>
-      <div class="book-description">Un mayordomo inglés recorre el campo reflexionando sobre su vida de servicio, la dignidad profesional y los sentimientos reprimidos durante décadas.</div>
-      
-      
-      <div class="book-actions">
-        <button class="btn-sm" onclick="window.editBook(&#39;4&#39;)">Editar</button>
-        <button class="btn-sm btn-del" onclick="window.deleteBook(&#39;4&#39;)">Eliminar</button>
-      </div>
-    </div>
-    <div class="book-card status-done">
-      <div class="book-status-bar"></div>
-      <div class="book-title">Klara and the Sun</div>
-      <div class="book-author">Kazuo Ishiguro</div>
-      <div class="book-meta">
-        <span class="badge badge-done">Terminado</span>
-        <span class="badge badge-format">Papel</span>
-        <span class="badge badge-format">Inglés</span>
-      </div>
-      <div class="book-stars">★★★★★</div>
-      <div class="book-description">Una robot amiga artificial observa el mundo desde la vitrina de una tienda mientras espera ser adoptada, reflexionando sobre el amor, la conciencia y qué significa ser humano.</div>
-      
-      <div class="book-notes">Extraordinaria reflexión sobre la conciencia.</div>
-      <div class="book-actions">
-        <button class="btn-sm" onclick="window.editBook(&#39;5&#39;)">Editar</button>
-        <button class="btn-sm btn-del" onclick="window.deleteBook(&#39;5&#39;)">Eliminar</button>
-      </div>
-    </div>
-    <div class="book-card status-done">
-      <div class="book-status-bar"></div>
-      <div class="book-title">Never Let Me Go</div>
-      <div class="book-author">Kazuo Ishiguro</div>
-      <div class="book-meta">
-        <span class="badge badge-done">Terminado</span>
-        <span class="badge badge-format">Papel</span>
-        <span class="badge badge-format">Inglés</span>
-      </div>
-      <div class="book-stars">★★★★★</div>
-      <div class="book-description">Tres amigos criados en una escuela inglesa descubren gradualmente su destino como donantes de órganos, en una meditación sobre la memoria, la mortalidad y el amor.</div>
-      
-      <div class="book-notes">Devastadoramente bella.</div>
-      <div class="book-actions">
-        <button class="btn-sm" onclick="window.editBook(&#39;6&#39;)">Editar</button>
-        <button class="btn-sm btn-del" onclick="window.deleteBook(&#39;6&#39;)">Eliminar</button>
-      </div>
-    </div>
-    <div class="book-card status-done">
-      <div class="book-status-bar"></div>
-      <div class="book-title">Machines Like Me</div>
-      <div class="book-author">Ian McEwan</div>
-      <div class="book-meta">
-        <span class="badge badge-done">Terminado</span>
-        <span class="badge badge-format">Papel</span>
-        <span class="badge badge-format">Inglés</span>
-      </div>
-      <div class="book-stars">★★★★☆</div>
-      <div class="book-description">En una Londres alternativa de los 80, un hombre compra uno de los primeros androides con IA, desencadenando un triángulo amoroso y profundos dilemas éticos sobre conciencia y moralidad.</div>
-      
-      <div class="book-notes">Dilemas éticos sobre IA muy vigentes.</div>
-      <div class="book-actions">
-        <button class="btn-sm" onclick="window.editBook(&#39;7&#39;)">Editar</button>
-        <button class="btn-sm btn-del" onclick="window.deleteBook(&#39;7&#39;)">Eliminar</button>
-      </div>
-    </div>
-    <div class="book-card status-recommended">
-      <div class="book-status-bar"></div>
-      <div class="book-title">Speak</div>
-      <div class="book-author">Louisa Hall</div>
-      <div class="book-meta">
-        <span class="badge badge-recommended">Recomendado</span>
-        <span class="badge badge-format">Kindle</span>
-        <span class="badge badge-format">Inglés</span>
-      </div>
-      
-      <div class="book-description">Cinco voces a través de los siglos convergen en torno a la pregunta de qué significa realmente comunicarse, con Alan Turing como uno de sus narradores.</div>
-      <div class="book-rec-source">Recomendado por <span>Claude</span> · Conversación sobre literatura e IA — marzo 2026</div>
-      
-      <div class="book-actions">
-        <button class="btn-sm" onclick="window.editBook(&#39;8&#39;)">Editar</button>
-        <button class="btn-sm btn-del" onclick="window.deleteBook(&#39;8&#39;)">Eliminar</button>
-      </div>
-    </div>
-    <div class="book-card status-recommended">
-      <div class="book-status-bar"></div>
-      <div class="book-title">Exhalation: Stories</div>
-      <div class="book-author">Ted Chiang</div>
-      <div class="book-meta">
-        <span class="badge badge-recommended">Recomendado</span>
-        <span class="badge badge-format">Kindle</span>
-        <span class="badge badge-format">Inglés</span>
-      </div>
-      
-      <div class="book-description">Colección de relatos de ciencia ficción filosófica sobre libre albedrío, memoria y conciencia. La historia Story of Your Life inspiró la película Arrival.</div>
-      <div class="book-rec-source">Recomendado por <span>Claude</span> · Conversación sobre literatura e IA — marzo 2026</div>
-      
-      <div class="book-actions">
-        <button class="btn-sm" onclick="window.editBook(&#39;9&#39;)">Editar</button>
-        <button class="btn-sm btn-del" onclick="window.deleteBook(&#39;9&#39;)">Eliminar</button>
-      </div>
-    </div></div>
+  <div class="books-grid" id="booksGrid"></div>
 </div>
 
 <div class="modal-overlay" id="configOverlay">
@@ -623,6 +420,5 @@ document.getElementById('configOverlay').addEventListener('click',function(e){if
 try { apiKey = localStorage.getItem('biblioteca_apikey') || ''; } catch(e) {}
 setSyncStatus('Conectando...', 'loading');
 </script>
-
-
-</body></html>
+</body>
+</html>
