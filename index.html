@@ -4,7 +4,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mi Biblioteca</title>
-<link href="./index_files/css2" rel="stylesheet">
+<link href="./Mi Biblioteca_files/css2" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; color: #1a1a1a; }
@@ -12,6 +12,10 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
 .lib-header { text-align: center; padding: 2rem 0 1.5rem; border-bottom: 0.5px solid #ddd; margin-bottom: 1.5rem; }
 .lib-header h1 { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 400; color: #1a1a1a; letter-spacing: 0.02em; }
 .lib-header p { font-size: 13px; color: #888; margin-top: 4px; font-weight: 300; letter-spacing: 0.05em; text-transform: uppercase; }
+.sync-status { font-size: 11px; margin-top: 6px; }
+.sync-ok { color: #1D9E75; }
+.sync-err { color: #A32D2D; }
+.sync-loading { color: #888; }
 .lib-controls { display: flex; gap: 10px; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center; }
 .lib-controls input { flex: 1; min-width: 180px; padding: 8px 12px; font-size: 14px; border: 0.5px solid #ccc; border-radius: 8px; background: #fff; color: #1a1a1a; font-family: 'Lato', sans-serif; }
 .lib-controls select { padding: 8px 12px; font-size: 13px; border: 0.5px solid #ccc; border-radius: 8px; background: #fff; color: #555; font-family: 'Lato', sans-serif; cursor: pointer; }
@@ -34,7 +38,7 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
 .book-title { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 500; color: #1a1a1a; line-height: 1.3; margin-bottom: 4px; padding-left: 12px; }
 .book-author { font-size: 13px; color: #666; font-style: italic; padding-left: 12px; margin-bottom: 10px; }
 .book-meta { display: flex; gap: 8px; flex-wrap: wrap; padding-left: 12px; margin-bottom: 10px; }
-.badge { font-size: 11px; padding: 3px 8px; border-radius: 8px; font-weight: 400; letter-spacing: 0.03em; }
+.badge { font-size: 11px; padding: 3px 8px; border-radius: 8px; font-weight: 400; }
 .badge-reading { background: #E1F5EE; color: #0F6E56; }
 .badge-done { background: #EEEDFE; color: #3C3489; }
 .badge-pending { background: #F1EFE8; color: #5F5E5A; }
@@ -42,9 +46,9 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
 .badge-format { background: #f0ede8; color: #666; }
 .book-stars { padding-left: 12px; margin-bottom: 8px; font-size: 14px; letter-spacing: 2px; color: #BA7517; }
 .book-rec-source { font-size: 12px; color: #888; padding-left: 12px; margin-bottom: 8px; font-style: italic; }
-.book-rec-source span { color: #BA7517; font-weight: 400; }
-.book-description { font-size: 13px; color: #555; font-weight: 300; line-height: 1.5; padding-left: 12px; margin-bottom: 8px; }
-.book-notes { font-size: 13px; color: #666; font-weight: 300; line-height: 1.5; padding-left: 12px; border-top: 0.5px solid #eee; padding-top: 8px; margin-top: 4px; font-style: italic; }
+.book-rec-source span { color: #BA7517; }
+.book-description { font-size: 13px; color: #555; line-height: 1.5; padding-left: 12px; margin-bottom: 8px; }
+.book-notes { font-size: 13px; color: #666; line-height: 1.5; padding-left: 12px; border-top: 0.5px solid #eee; padding-top: 8px; margin-top: 4px; font-style: italic; }
 .book-actions { display: flex; gap: 8px; padding-left: 12px; margin-top: 10px; }
 .btn-sm { font-size: 11px; padding: 4px 10px; border: 0.5px solid #ccc; border-radius: 8px; background: transparent; color: #666; cursor: pointer; font-family: 'Lato', sans-serif; }
 .btn-sm:hover { background: #f0ede8; color: #1a1a1a; }
@@ -54,12 +58,12 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
 .modal { background: #fff; border-radius: 12px; padding: 1.5rem; width: 90%; max-width: 460px; border: 0.5px solid #ccc; max-height: 90vh; overflow-y: auto; }
 .modal h2 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 400; margin-bottom: 1rem; color: #1a1a1a; }
 .form-row { margin-bottom: 12px; }
-.form-row label { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 0.07em; color: #888; margin-bottom: 4px; font-weight: 400; }
+.form-row label { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 0.07em; color: #888; margin-bottom: 4px; }
 .form-row input, .form-row select, .form-row textarea { width: 100%; padding: 8px 10px; font-size: 14px; border: 0.5px solid #ccc; border-radius: 8px; background: #fff; color: #1a1a1a; font-family: 'Lato', sans-serif; }
 .form-row textarea { resize: vertical; min-height: 70px; }
 .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .rec-section { background: #f9f7f3; border-radius: 8px; padding: 12px; margin-bottom: 12px; border: 0.5px solid #e0ddd8; }
-.rec-section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 10px; font-weight: 400; }
+.rec-section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 10px; }
 .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 1rem; }
 .btn-primary { padding: 8px 18px; font-size: 13px; font-family: 'Lato', sans-serif; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; border: none; border-radius: 8px; background: #1a1a1a; color: #fff; cursor: pointer; }
 .btn-primary:hover { background: #333; }
@@ -77,7 +81,6 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
 .empty-state { text-align: center; padding: 3rem; color: #888; font-family: 'Playfair Display', serif; font-style: italic; font-size: 16px; grid-column: 1/-1; }
 @media (max-width: 600px) {
   .stats-row { grid-template-columns: repeat(3, 1fr); }
-  .stats-row .stat-card:nth-child(4), .stats-row .stat-card:nth-child(5) { grid-column: span 1; }
   .books-grid { grid-template-columns: 1fr; }
 }
 </style>
@@ -87,6 +90,7 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
   <div class="lib-header">
     <h1>Mi Biblioteca</h1>
     <p>Registro personal de lecturas</p>
+    <div class="sync-status sync-ok" id="syncStatus">✓ Sincronizado</div>
   </div>
   <div class="stats-row" id="statsRow">
     <div class="stat-card"><div class="stat-num">11</div><div class="stat-label">Total</div></div>
@@ -121,152 +125,8 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
       
       <div class="book-notes">En curso.</div>
       <div class="book-actions">
-        <button class="btn-sm" onclick="editBook(1)">Editar</button>
-        <button class="btn-sm btn-del" onclick="deleteBook(1)">Eliminar</button>
-      </div>
-    </div>
-    <div class="book-card status-reading">
-      <div class="book-status-bar"></div>
-      <div class="book-title">Exodus</div>
-      <div class="book-author">Peter F. Hamilton</div>
-      <div class="book-meta">
-        <span class="badge badge-reading">Leyendo</span>
-        <span class="badge badge-format">Kindle</span>
-        <span class="badge badge-format">Inglés</span>
-      </div>
-      
-      
-      
-      <div class="book-notes">En curso.</div>
-      <div class="book-actions">
-        <button class="btn-sm" onclick="editBook(2)">Editar</button>
-        <button class="btn-sm btn-del" onclick="deleteBook(2)">Eliminar</button>
-      </div>
-    </div>
-    <div class="book-card status-reading">
-      <div class="book-status-bar"></div>
-      <div class="book-title">Keith Jarrett: A Biography</div>
-      <div class="book-author">Wolfgang Sandner</div>
-      <div class="book-meta">
-        <span class="badge badge-reading">Leyendo</span>
-        <span class="badge badge-format">Papel</span>
-        <span class="badge badge-format">Inglés</span>
-      </div>
-      
-      <div class="book-description">Biografía del pianista de jazz Keith Jarrett, explorando su vida, su proceso creativo y las circunstancias legendarias detrás de grabaciones como The Köln Concert.</div>
-      
-      <div class="book-notes">Favorito: The Köln Concert.</div>
-      <div class="book-actions">
-        <button class="btn-sm" onclick="editBook(3)">Editar</button>
-        <button class="btn-sm btn-del" onclick="deleteBook(3)">Eliminar</button>
-      </div>
-    </div>
-    <div class="book-card status-done">
-      <div class="book-status-bar"></div>
-      <div class="book-title">The Remains of the Day</div>
-      <div class="book-author">Kazuo Ishiguro</div>
-      <div class="book-meta">
-        <span class="badge badge-done">Terminado</span>
-        <span class="badge badge-format">Papel</span>
-        <span class="badge badge-format">Inglés</span>
-      </div>
-      <div class="book-stars">★★★★★</div>
-      <div class="book-description">Un mayordomo inglés recorre el campo reflexionando sobre su vida de servicio, la dignidad profesional y los sentimientos reprimidos durante décadas.</div>
-      
-      
-      <div class="book-actions">
-        <button class="btn-sm" onclick="editBook(4)">Editar</button>
-        <button class="btn-sm btn-del" onclick="deleteBook(4)">Eliminar</button>
-      </div>
-    </div>
-    <div class="book-card status-done">
-      <div class="book-status-bar"></div>
-      <div class="book-title">Klara and the Sun</div>
-      <div class="book-author">Kazuo Ishiguro</div>
-      <div class="book-meta">
-        <span class="badge badge-done">Terminado</span>
-        <span class="badge badge-format">Papel</span>
-        <span class="badge badge-format">Inglés</span>
-      </div>
-      <div class="book-stars">★★★★★</div>
-      <div class="book-description">Una robot amiga artificial observa el mundo desde la vitrina de una tienda mientras espera ser adoptada, reflexionando sobre el amor, la conciencia y qué significa ser humano.</div>
-      
-      <div class="book-notes">Extraordinaria reflexión sobre la conciencia.</div>
-      <div class="book-actions">
-        <button class="btn-sm" onclick="editBook(5)">Editar</button>
-        <button class="btn-sm btn-del" onclick="deleteBook(5)">Eliminar</button>
-      </div>
-    </div>
-    <div class="book-card status-done">
-      <div class="book-status-bar"></div>
-      <div class="book-title">Never Let Me Go</div>
-      <div class="book-author">Kazuo Ishiguro</div>
-      <div class="book-meta">
-        <span class="badge badge-done">Terminado</span>
-        <span class="badge badge-format">Papel</span>
-        <span class="badge badge-format">Inglés</span>
-      </div>
-      <div class="book-stars">★★★★★</div>
-      <div class="book-description">Tres amigos criados en una escuela inglesa descubren gradualmente su destino como donantes de órganos, en una meditación sobre la memoria, la mortalidad y el amor.</div>
-      
-      <div class="book-notes">Devastadoramente bella.</div>
-      <div class="book-actions">
-        <button class="btn-sm" onclick="editBook(6)">Editar</button>
-        <button class="btn-sm btn-del" onclick="deleteBook(6)">Eliminar</button>
-      </div>
-    </div>
-    <div class="book-card status-done">
-      <div class="book-status-bar"></div>
-      <div class="book-title">Machines Like Me</div>
-      <div class="book-author">Ian McEwan</div>
-      <div class="book-meta">
-        <span class="badge badge-done">Terminado</span>
-        <span class="badge badge-format">Papel</span>
-        <span class="badge badge-format">Inglés</span>
-      </div>
-      <div class="book-stars">★★★★☆</div>
-      <div class="book-description">En una Londres alternativa de los 80, un hombre compra uno de los primeros androides con IA, desencadenando un triángulo amoroso y profundos dilemas éticos sobre conciencia y moralidad.</div>
-      
-      <div class="book-notes">Dilemas éticos sobre IA muy vigentes.</div>
-      <div class="book-actions">
-        <button class="btn-sm" onclick="editBook(7)">Editar</button>
-        <button class="btn-sm btn-del" onclick="deleteBook(7)">Eliminar</button>
-      </div>
-    </div>
-    <div class="book-card status-recommended">
-      <div class="book-status-bar"></div>
-      <div class="book-title">Speak</div>
-      <div class="book-author">Louisa Hall</div>
-      <div class="book-meta">
-        <span class="badge badge-recommended">Recomendado</span>
-        <span class="badge badge-format">Kindle</span>
-        <span class="badge badge-format">Inglés</span>
-      </div>
-      
-      <div class="book-description">Cinco voces a través de los siglos convergen en torno a la pregunta de qué significa realmente comunicarse, con Alan Turing como uno de sus narradores.</div>
-      <div class="book-rec-source">Recomendado por <span>Claude</span> · Conversación sobre literatura e IA — marzo 2026</div>
-      
-      <div class="book-actions">
-        <button class="btn-sm" onclick="editBook(8)">Editar</button>
-        <button class="btn-sm btn-del" onclick="deleteBook(8)">Eliminar</button>
-      </div>
-    </div>
-    <div class="book-card status-recommended">
-      <div class="book-status-bar"></div>
-      <div class="book-title">Exhalation: Stories</div>
-      <div class="book-author">Ted Chiang</div>
-      <div class="book-meta">
-        <span class="badge badge-recommended">Recomendado</span>
-        <span class="badge badge-format">Kindle</span>
-        <span class="badge badge-format">Inglés</span>
-      </div>
-      
-      <div class="book-description">Colección de relatos de ciencia ficción filosófica sobre libre albedrío, memoria y conciencia. La historia Story of Your Life inspiró la película Arrival.</div>
-      <div class="book-rec-source">Recomendado por <span>Claude</span> · Conversación sobre literatura e IA — marzo 2026</div>
-      
-      <div class="book-actions">
-        <button class="btn-sm" onclick="editBook(9)">Editar</button>
-        <button class="btn-sm btn-del" onclick="deleteBook(9)">Eliminar</button>
+        <button class="btn-sm" onclick="window.editBook(&#39;1&#39;)">Editar</button>
+        <button class="btn-sm btn-del" onclick="window.deleteBook(&#39;1&#39;)">Eliminar</button>
       </div>
     </div>
     <div class="book-card status-recommended">
@@ -283,8 +143,8 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
       <div class="book-rec-source">Recomendado por <span>Claude</span> · Conversación sobre literatura e IA — marzo 2026</div>
       
       <div class="book-actions">
-        <button class="btn-sm" onclick="editBook(10)">Editar</button>
-        <button class="btn-sm btn-del" onclick="deleteBook(10)">Eliminar</button>
+        <button class="btn-sm" onclick="window.editBook(&#39;10&#39;)">Editar</button>
+        <button class="btn-sm btn-del" onclick="window.deleteBook(&#39;10&#39;)">Eliminar</button>
       </div>
     </div>
     <div class="book-card status-recommended">
@@ -301,8 +161,152 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
       <div class="book-rec-source">Recomendado por <span>Claude</span> · Conversación sobre literatura e IA — marzo 2026</div>
       
       <div class="book-actions">
-        <button class="btn-sm" onclick="editBook(11)">Editar</button>
-        <button class="btn-sm btn-del" onclick="deleteBook(11)">Eliminar</button>
+        <button class="btn-sm" onclick="window.editBook(&#39;11&#39;)">Editar</button>
+        <button class="btn-sm btn-del" onclick="window.deleteBook(&#39;11&#39;)">Eliminar</button>
+      </div>
+    </div>
+    <div class="book-card status-reading">
+      <div class="book-status-bar"></div>
+      <div class="book-title">Exodus</div>
+      <div class="book-author">Peter F. Hamilton</div>
+      <div class="book-meta">
+        <span class="badge badge-reading">Leyendo</span>
+        <span class="badge badge-format">Kindle</span>
+        <span class="badge badge-format">Inglés</span>
+      </div>
+      
+      
+      
+      <div class="book-notes">En curso.</div>
+      <div class="book-actions">
+        <button class="btn-sm" onclick="window.editBook(&#39;2&#39;)">Editar</button>
+        <button class="btn-sm btn-del" onclick="window.deleteBook(&#39;2&#39;)">Eliminar</button>
+      </div>
+    </div>
+    <div class="book-card status-reading">
+      <div class="book-status-bar"></div>
+      <div class="book-title">Keith Jarrett: A Biography</div>
+      <div class="book-author">Wolfgang Sandner</div>
+      <div class="book-meta">
+        <span class="badge badge-reading">Leyendo</span>
+        <span class="badge badge-format">Papel</span>
+        <span class="badge badge-format">Inglés</span>
+      </div>
+      
+      <div class="book-description">Biografía del pianista de jazz Keith Jarrett, explorando su vida, su proceso creativo y las circunstancias legendarias detrás de grabaciones como The Köln Concert.</div>
+      
+      <div class="book-notes">Favorito: The Köln Concert.</div>
+      <div class="book-actions">
+        <button class="btn-sm" onclick="window.editBook(&#39;3&#39;)">Editar</button>
+        <button class="btn-sm btn-del" onclick="window.deleteBook(&#39;3&#39;)">Eliminar</button>
+      </div>
+    </div>
+    <div class="book-card status-done">
+      <div class="book-status-bar"></div>
+      <div class="book-title">The Remains of the Day</div>
+      <div class="book-author">Kazuo Ishiguro</div>
+      <div class="book-meta">
+        <span class="badge badge-done">Terminado</span>
+        <span class="badge badge-format">Papel</span>
+        <span class="badge badge-format">Inglés</span>
+      </div>
+      <div class="book-stars">★★★★★</div>
+      <div class="book-description">Un mayordomo inglés recorre el campo reflexionando sobre su vida de servicio, la dignidad profesional y los sentimientos reprimidos durante décadas.</div>
+      
+      
+      <div class="book-actions">
+        <button class="btn-sm" onclick="window.editBook(&#39;4&#39;)">Editar</button>
+        <button class="btn-sm btn-del" onclick="window.deleteBook(&#39;4&#39;)">Eliminar</button>
+      </div>
+    </div>
+    <div class="book-card status-done">
+      <div class="book-status-bar"></div>
+      <div class="book-title">Klara and the Sun</div>
+      <div class="book-author">Kazuo Ishiguro</div>
+      <div class="book-meta">
+        <span class="badge badge-done">Terminado</span>
+        <span class="badge badge-format">Papel</span>
+        <span class="badge badge-format">Inglés</span>
+      </div>
+      <div class="book-stars">★★★★★</div>
+      <div class="book-description">Una robot amiga artificial observa el mundo desde la vitrina de una tienda mientras espera ser adoptada, reflexionando sobre el amor, la conciencia y qué significa ser humano.</div>
+      
+      <div class="book-notes">Extraordinaria reflexión sobre la conciencia.</div>
+      <div class="book-actions">
+        <button class="btn-sm" onclick="window.editBook(&#39;5&#39;)">Editar</button>
+        <button class="btn-sm btn-del" onclick="window.deleteBook(&#39;5&#39;)">Eliminar</button>
+      </div>
+    </div>
+    <div class="book-card status-done">
+      <div class="book-status-bar"></div>
+      <div class="book-title">Never Let Me Go</div>
+      <div class="book-author">Kazuo Ishiguro</div>
+      <div class="book-meta">
+        <span class="badge badge-done">Terminado</span>
+        <span class="badge badge-format">Papel</span>
+        <span class="badge badge-format">Inglés</span>
+      </div>
+      <div class="book-stars">★★★★★</div>
+      <div class="book-description">Tres amigos criados en una escuela inglesa descubren gradualmente su destino como donantes de órganos, en una meditación sobre la memoria, la mortalidad y el amor.</div>
+      
+      <div class="book-notes">Devastadoramente bella.</div>
+      <div class="book-actions">
+        <button class="btn-sm" onclick="window.editBook(&#39;6&#39;)">Editar</button>
+        <button class="btn-sm btn-del" onclick="window.deleteBook(&#39;6&#39;)">Eliminar</button>
+      </div>
+    </div>
+    <div class="book-card status-done">
+      <div class="book-status-bar"></div>
+      <div class="book-title">Machines Like Me</div>
+      <div class="book-author">Ian McEwan</div>
+      <div class="book-meta">
+        <span class="badge badge-done">Terminado</span>
+        <span class="badge badge-format">Papel</span>
+        <span class="badge badge-format">Inglés</span>
+      </div>
+      <div class="book-stars">★★★★☆</div>
+      <div class="book-description">En una Londres alternativa de los 80, un hombre compra uno de los primeros androides con IA, desencadenando un triángulo amoroso y profundos dilemas éticos sobre conciencia y moralidad.</div>
+      
+      <div class="book-notes">Dilemas éticos sobre IA muy vigentes.</div>
+      <div class="book-actions">
+        <button class="btn-sm" onclick="window.editBook(&#39;7&#39;)">Editar</button>
+        <button class="btn-sm btn-del" onclick="window.deleteBook(&#39;7&#39;)">Eliminar</button>
+      </div>
+    </div>
+    <div class="book-card status-recommended">
+      <div class="book-status-bar"></div>
+      <div class="book-title">Speak</div>
+      <div class="book-author">Louisa Hall</div>
+      <div class="book-meta">
+        <span class="badge badge-recommended">Recomendado</span>
+        <span class="badge badge-format">Kindle</span>
+        <span class="badge badge-format">Inglés</span>
+      </div>
+      
+      <div class="book-description">Cinco voces a través de los siglos convergen en torno a la pregunta de qué significa realmente comunicarse, con Alan Turing como uno de sus narradores.</div>
+      <div class="book-rec-source">Recomendado por <span>Claude</span> · Conversación sobre literatura e IA — marzo 2026</div>
+      
+      <div class="book-actions">
+        <button class="btn-sm" onclick="window.editBook(&#39;8&#39;)">Editar</button>
+        <button class="btn-sm btn-del" onclick="window.deleteBook(&#39;8&#39;)">Eliminar</button>
+      </div>
+    </div>
+    <div class="book-card status-recommended">
+      <div class="book-status-bar"></div>
+      <div class="book-title">Exhalation: Stories</div>
+      <div class="book-author">Ted Chiang</div>
+      <div class="book-meta">
+        <span class="badge badge-recommended">Recomendado</span>
+        <span class="badge badge-format">Kindle</span>
+        <span class="badge badge-format">Inglés</span>
+      </div>
+      
+      <div class="book-description">Colección de relatos de ciencia ficción filosófica sobre libre albedrío, memoria y conciencia. La historia Story of Your Life inspiró la película Arrival.</div>
+      <div class="book-rec-source">Recomendado por <span>Claude</span> · Conversación sobre literatura e IA — marzo 2026</div>
+      
+      <div class="book-actions">
+        <button class="btn-sm" onclick="window.editBook(&#39;9&#39;)">Editar</button>
+        <button class="btn-sm btn-del" onclick="window.deleteBook(&#39;9&#39;)">Eliminar</button>
       </div>
     </div></div>
 </div>
@@ -406,31 +410,79 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
   </div>
 </div>
 
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyALC_gWQgWVo4DgIsHR-E57nNGE7bjqsqo",
+  authDomain: "mi-biblioteca-4652c.firebaseapp.com",
+  projectId: "mi-biblioteca-4652c",
+  storageBucket: "mi-biblioteca-4652c.firebasestorage.app",
+  messagingSenderId: "820593188553",
+  appId: "1:820593188553:web:a6963873fe98f7f32c7718"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const colRef = collection(db, "libros");
+
 const INITIAL_BOOKS = [
-  { id: 1, title: "The Magic Mountain", author: "Thomas Mann", status: "reading", format: "Papel", lang: "Inglés", rating: 0, description: "Novela filosófica monumental ambientada en un sanatorio suizo antes de la Primera Guerra Mundial, donde Hans Castorp reflexiona sobre el tiempo, la enfermedad y la condición humana.", notes: "En curso.", recBy: "", recSource: "" },
-  { id: 2, title: "Exodus", author: "Peter F. Hamilton", status: "reading", format: "Kindle", lang: "Inglés", rating: 0, description: "", notes: "En curso.", recBy: "", recSource: "" },
-  { id: 3, title: "Keith Jarrett: A Biography", author: "Wolfgang Sandner", status: "reading", format: "Papel", lang: "Inglés", rating: 0, description: "Biografía del pianista de jazz Keith Jarrett, explorando su vida, su proceso creativo y las circunstancias legendarias detrás de grabaciones como The Köln Concert.", notes: "Favorito: The Köln Concert.", recBy: "", recSource: "" },
-  { id: 4, title: "The Remains of the Day", author: "Kazuo Ishiguro", status: "done", format: "Papel", lang: "Inglés", rating: 5, description: "Un mayordomo inglés recorre el campo reflexionando sobre su vida de servicio, la dignidad profesional y los sentimientos reprimidos durante décadas.", notes: "", recBy: "", recSource: "" },
-  { id: 5, title: "Klara and the Sun", author: "Kazuo Ishiguro", status: "done", format: "Papel", lang: "Inglés", rating: 5, description: "Una robot amiga artificial observa el mundo desde la vitrina de una tienda mientras espera ser adoptada, reflexionando sobre el amor, la conciencia y qué significa ser humano.", notes: "Extraordinaria reflexión sobre la conciencia.", recBy: "", recSource: "" },
-  { id: 6, title: "Never Let Me Go", author: "Kazuo Ishiguro", status: "done", format: "Papel", lang: "Inglés", rating: 5, description: "Tres amigos criados en una escuela inglesa descubren gradualmente su destino como donantes de órganos, en una meditación sobre la memoria, la mortalidad y el amor.", notes: "Devastadoramente bella.", recBy: "", recSource: "" },
-  { id: 7, title: "Machines Like Me", author: "Ian McEwan", status: "done", format: "Papel", lang: "Inglés", rating: 4, description: "En una Londres alternativa de los 80, un hombre compra uno de los primeros androides con IA, desencadenando un triángulo amoroso y profundos dilemas éticos sobre conciencia y moralidad.", notes: "Dilemas éticos sobre IA muy vigentes.", recBy: "", recSource: "" },
-  { id: 8, title: "Speak", author: "Louisa Hall", status: "recommended", format: "Kindle", lang: "Inglés", rating: 0, description: "Cinco voces a través de los siglos convergen en torno a la pregunta de qué significa realmente comunicarse, con Alan Turing como uno de sus narradores.", notes: "", recBy: "Claude", recSource: "Conversación sobre literatura e IA — marzo 2026" },
-  { id: 9, title: "Exhalation: Stories", author: "Ted Chiang", status: "recommended", format: "Kindle", lang: "Inglés", rating: 0, description: "Colección de relatos de ciencia ficción filosófica sobre libre albedrío, memoria y conciencia. La historia Story of Your Life inspiró la película Arrival.", notes: "", recBy: "Claude", recSource: "Conversación sobre literatura e IA — marzo 2026" },
-  { id: 10, title: "The Age of AI", author: "Kissinger, Schmidt & Huttenlocher", status: "recommended", format: "Kindle", lang: "Inglés", rating: 0, description: "Tres perspectivas sobre cómo la inteligencia artificial transforma la sociedad, la geopolítica y el significado de ser humano.", notes: "", recBy: "Claude", recSource: "Conversación sobre literatura e IA — marzo 2026" },
-  { id: 11, title: "Human Compatible", author: "Stuart Russell", status: "recommended", format: "Kindle", lang: "Inglés", rating: 0, description: "El pionero de la IA Stuart Russell argumenta que debemos rediseñar la IA desde sus fundamentos para garantizar que sea compatible con los valores humanos.", notes: "", recBy: "Claude", recSource: "Conversación sobre literatura e IA — marzo 2026" }
+  { id: "1", title: "The Magic Mountain", author: "Thomas Mann", status: "reading", format: "Papel", lang: "Inglés", rating: 0, description: "Novela filosófica monumental ambientada en un sanatorio suizo antes de la Primera Guerra Mundial, donde Hans Castorp reflexiona sobre el tiempo, la enfermedad y la condición humana.", notes: "En curso.", recBy: "", recSource: "" },
+  { id: "2", title: "Exodus", author: "Peter F. Hamilton", status: "reading", format: "Kindle", lang: "Inglés", rating: 0, description: "", notes: "En curso.", recBy: "", recSource: "" },
+  { id: "3", title: "Keith Jarrett: A Biography", author: "Wolfgang Sandner", status: "reading", format: "Papel", lang: "Inglés", rating: 0, description: "Biografía del pianista de jazz Keith Jarrett, explorando su vida, su proceso creativo y las circunstancias legendarias detrás de grabaciones como The Köln Concert.", notes: "Favorito: The Köln Concert.", recBy: "", recSource: "" },
+  { id: "4", title: "The Remains of the Day", author: "Kazuo Ishiguro", status: "done", format: "Papel", lang: "Inglés", rating: 5, description: "Un mayordomo inglés recorre el campo reflexionando sobre su vida de servicio, la dignidad profesional y los sentimientos reprimidos durante décadas.", notes: "", recBy: "", recSource: "" },
+  { id: "5", title: "Klara and the Sun", author: "Kazuo Ishiguro", status: "done", format: "Papel", lang: "Inglés", rating: 5, description: "Una robot amiga artificial observa el mundo desde la vitrina de una tienda mientras espera ser adoptada, reflexionando sobre el amor, la conciencia y qué significa ser humano.", notes: "Extraordinaria reflexión sobre la conciencia.", recBy: "", recSource: "" },
+  { id: "6", title: "Never Let Me Go", author: "Kazuo Ishiguro", status: "done", format: "Papel", lang: "Inglés", rating: 5, description: "Tres amigos criados en una escuela inglesa descubren gradualmente su destino como donantes de órganos, en una meditación sobre la memoria, la mortalidad y el amor.", notes: "Devastadoramente bella.", recBy: "", recSource: "" },
+  { id: "7", title: "Machines Like Me", author: "Ian McEwan", status: "done", format: "Papel", lang: "Inglés", rating: 4, description: "En una Londres alternativa de los 80, un hombre compra uno de los primeros androides con IA, desencadenando un triángulo amoroso y profundos dilemas éticos sobre conciencia y moralidad.", notes: "Dilemas éticos sobre IA muy vigentes.", recBy: "", recSource: "" },
+  { id: "8", title: "Speak", author: "Louisa Hall", status: "recommended", format: "Kindle", lang: "Inglés", rating: 0, description: "Cinco voces a través de los siglos convergen en torno a la pregunta de qué significa realmente comunicarse, con Alan Turing como uno de sus narradores.", notes: "", recBy: "Claude", recSource: "Conversación sobre literatura e IA — marzo 2026" },
+  { id: "9", title: "Exhalation: Stories", author: "Ted Chiang", status: "recommended", format: "Kindle", lang: "Inglés", rating: 0, description: "Colección de relatos de ciencia ficción filosófica sobre libre albedrío, memoria y conciencia. La historia Story of Your Life inspiró la película Arrival.", notes: "", recBy: "Claude", recSource: "Conversación sobre literatura e IA — marzo 2026" },
+  { id: "10", title: "The Age of AI", author: "Kissinger, Schmidt & Huttenlocher", status: "recommended", format: "Kindle", lang: "Inglés", rating: 0, description: "Tres perspectivas sobre cómo la inteligencia artificial transforma la sociedad, la geopolítica y el significado de ser humano.", notes: "", recBy: "Claude", recSource: "Conversación sobre literatura e IA — marzo 2026" },
+  { id: "11", title: "Human Compatible", author: "Stuart Russell", status: "recommended", format: "Kindle", lang: "Inglés", rating: 0, description: "El pionero de la IA Stuart Russell argumenta que debemos rediseñar la IA desde sus fundamentos para garantizar que sea compatible con los valores humanos.", notes: "", recBy: "Claude", recSource: "Conversación sobre literatura e IA — marzo 2026" }
 ];
 
-let books = [], editingId = null, apiKey = '';
+let books = [];
+let editingId = null;
+let apiKey = '';
+let initialized = false;
 
-function loadBooks() {
-  try { const r = localStorage.getItem('biblioteca_libros'); books = r ? JSON.parse(r) : [...INITIAL_BOOKS]; } catch(e) { books = [...INITIAL_BOOKS]; }
-  try { apiKey = localStorage.getItem('biblioteca_apikey') || ''; } catch(e) {}
-  render();
+function setSyncStatus(msg, type) {
+  const el = document.getElementById('syncStatus');
+  el.textContent = msg;
+  el.className = 'sync-status sync-' + type;
 }
 
-function saveBooks() {
-  try { localStorage.setItem('biblioteca_libros', JSON.stringify(books)); } catch(e) {}
+onSnapshot(colRef, (snapshot) => {
+  if (!initialized && snapshot.empty) {
+    setSyncStatus('Cargando biblioteca inicial...', 'loading');
+    Promise.all(INITIAL_BOOKS.map(b => setDoc(doc(db, 'libros', b.id), b)))
+      .then(() => { initialized = true; setSyncStatus('✓ Sincronizado', 'ok'); })
+      .catch(() => setSyncStatus('Error al inicializar', 'err'));
+    return;
+  }
+  initialized = true;
+  books = snapshot.docs.map(d => d.data());
+  books.sort((a, b) => String(a.id).localeCompare(String(b.id)));
+  render();
+  setSyncStatus('✓ Sincronizado', 'ok');
+}, (error) => {
+  setSyncStatus('Error de conexión', 'err');
+});
+
+async function saveBookToFirebase(book) {
+  try {
+    setSyncStatus('Guardando...', 'loading');
+    await setDoc(doc(db, 'libros', String(book.id)), book);
+    setSyncStatus('✓ Sincronizado', 'ok');
+  } catch(e) { setSyncStatus('Error al guardar', 'err'); }
+}
+
+async function deleteBookFromFirebase(id) {
+  try {
+    setSyncStatus('Eliminando...', 'loading');
+    await deleteDoc(doc(db, 'libros', String(id)));
+    setSyncStatus('✓ Sincronizado', 'ok');
+  } catch(e) { setSyncStatus('Error al eliminar', 'err'); }
 }
 
 function render() { renderStats(); renderBooks(); }
@@ -471,18 +523,19 @@ function renderBooks() {
       ${b.status==='recommended'&&b.recBy?`<div class="book-rec-source">Recomendado por <span>${b.recBy}</span>${b.recSource?' · '+b.recSource:''}</div>`:''}
       ${b.notes?`<div class="book-notes">${b.notes}</div>`:''}
       <div class="book-actions">
-        <button class="btn-sm" onclick="editBook(${b.id})">Editar</button>
-        <button class="btn-sm btn-del" onclick="deleteBook(${b.id})">Eliminar</button>
+        <button class="btn-sm" onclick="window.editBook('${b.id}')">Editar</button>
+        <button class="btn-sm btn-del" onclick="window.deleteBook('${b.id}')">Eliminar</button>
       </div>
     </div>`).join('');
 }
 
-function openConfig() {
+window.openConfig = function() {
+  try { apiKey = localStorage.getItem('biblioteca_apikey') || ''; } catch(e) {}
   if (apiKey) document.getElementById('apiKeyInput').value = apiKey;
   document.getElementById('configOverlay').classList.add('open');
 }
-function closeConfig() { document.getElementById('configOverlay').classList.remove('open'); }
-function saveApiKey() {
+window.closeConfig = function() { document.getElementById('configOverlay').classList.remove('open'); }
+window.saveApiKey = function() {
   const val = document.getElementById('apiKeyInput').value.trim();
   if (!val) return;
   apiKey = val;
@@ -491,10 +544,13 @@ function saveApiKey() {
   setTimeout(()=>{ document.getElementById('keySaved').style.display='none'; }, 2000);
 }
 
-async function generateDescription() {
+window.generateDescription = async function() {
   const title = document.getElementById('fTitle').value.trim();
   const author = document.getElementById('fAuthor').value.trim();
   if (!title||!author) { document.getElementById('apiNotice').textContent='Ingresa título y autor primero.'; return; }
+  if (!apiKey) {
+    try { apiKey = localStorage.getItem('biblioteca_apikey') || ''; } catch(e) {}
+  }
   if (!apiKey) { document.getElementById('apiNotice').textContent='Configura tu API Key primero (botón ⚙ API Key).'; return; }
   const btn = document.getElementById('btnGenerate');
   btn.disabled = true; btn.textContent = 'Generando...';
@@ -513,13 +569,13 @@ async function generateDescription() {
   btn.disabled=false; btn.innerHTML='Generar<br>con IA';
 }
 
-function toggleRecFields() {
+window.toggleRecFields = function() {
   document.getElementById('recFields').style.display = document.getElementById('fStatus').value==='recommended'?'block':'none';
 }
 
-function openModal(id=null) {
+window.openModal = function(id=null) {
   editingId=id;
-  const b=id?books.find(x=>x.id===id):null;
+  const b=id?books.find(x=>String(x.id)===String(id)):null;
   document.getElementById('modalTitle').textContent=id?'Editar libro':'Agregar libro';
   document.getElementById('fTitle').value=b?b.title:'';
   document.getElementById('fAuthor').value=b?b.author:'';
@@ -532,27 +588,40 @@ function openModal(id=null) {
   document.getElementById('fRecBy').value=b?(b.recBy||''):'';
   document.getElementById('fRecSource').value=b?(b.recSource||''):'';
   document.getElementById('apiNotice').textContent='';
-  toggleRecFields();
+  window.toggleRecFields();
   document.getElementById('modalOverlay').classList.add('open');
 }
 
-function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); editingId=null; }
-function editBook(id) { openModal(id); }
-function deleteBook(id) {
+window.closeModal = function() { document.getElementById('modalOverlay').classList.remove('open'); editingId=null; }
+window.editBook = function(id) { window.openModal(id); }
+window.deleteBook = async function(id) {
   if (!confirm('¿Eliminar este libro?')) return;
-  books=books.filter(b=>b.id!==id); saveBooks(); render();
+  await deleteBookFromFirebase(id);
 }
-function saveBook() {
+window.saveBook = async function() {
   const title=document.getElementById('fTitle').value.trim(), author=document.getElementById('fAuthor').value.trim();
   if (!title||!author) { alert('Título y autor son obligatorios.'); return; }
-  const book={id:editingId||Date.now(),title,author,status:document.getElementById('fStatus').value,format:document.getElementById('fFormat').value,lang:document.getElementById('fLang').value,rating:parseInt(document.getElementById('fRating').value),description:document.getElementById('fDescription').value.trim(),notes:document.getElementById('fNotes').value.trim(),recBy:document.getElementById('fRecBy').value.trim(),recSource:document.getElementById('fRecSource').value.trim()};
-  if (editingId) { books=books.map(b=>b.id===editingId?book:b); } else { books.push(book); }
-  saveBooks(); closeModal(); render();
+  const book={
+    id: editingId ? String(editingId) : String(Date.now()),
+    title, author,
+    status:document.getElementById('fStatus').value,
+    format:document.getElementById('fFormat').value,
+    lang:document.getElementById('fLang').value,
+    rating:parseInt(document.getElementById('fRating').value),
+    description:document.getElementById('fDescription').value.trim(),
+    notes:document.getElementById('fNotes').value.trim(),
+    recBy:document.getElementById('fRecBy').value.trim(),
+    recSource:document.getElementById('fRecSource').value.trim()
+  };
+  window.closeModal();
+  await saveBookToFirebase(book);
 }
 
-document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
-document.getElementById('configOverlay').addEventListener('click',function(e){if(e.target===this)closeConfig();});
-loadBooks();
+document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)window.closeModal();});
+document.getElementById('configOverlay').addEventListener('click',function(e){if(e.target===this)window.closeConfig();});
+
+try { apiKey = localStorage.getItem('biblioteca_apikey') || ''; } catch(e) {}
+setSyncStatus('Conectando...', 'loading');
 </script>
 
 
