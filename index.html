@@ -13,9 +13,7 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
 .lib-header h1 { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 400; color: #1a1a1a; letter-spacing: 0.02em; }
 .lib-header p { font-size: 13px; color: #888; margin-top: 4px; font-weight: 300; letter-spacing: 0.05em; text-transform: uppercase; }
 .sync-status { font-size: 11px; margin-top: 6px; }
-.sync-ok { color: #1D9E75; }
-.sync-err { color: #A32D2D; }
-.sync-loading { color: #888; }
+.sync-ok { color: #1D9E75; } .sync-err { color: #A32D2D; } .sync-loading { color: #888; }
 .lib-controls { display: flex; gap: 10px; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center; }
 .lib-controls input { flex: 1; min-width: 180px; padding: 8px 12px; font-size: 14px; border: 0.5px solid #ccc; border-radius: 8px; background: #fff; color: #1a1a1a; font-family: 'Lato', sans-serif; }
 .lib-controls select { padding: 8px 12px; font-size: 13px; border: 0.5px solid #ccc; border-radius: 8px; background: #fff; color: #555; font-family: 'Lato', sans-serif; cursor: pointer; }
@@ -79,10 +77,7 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
 .key-input-row input { flex: 1; font-family: monospace; font-size: 12px; }
 .key-saved { font-size: 11px; color: #0F6E56; margin-top: 4px; display: none; }
 .empty-state { text-align: center; padding: 3rem; color: #888; font-family: 'Playfair Display', serif; font-style: italic; font-size: 16px; grid-column: 1/-1; }
-@media (max-width: 600px) {
-  .stats-row { grid-template-columns: repeat(3, 1fr); }
-  .books-grid { grid-template-columns: 1fr; }
-}
+@media (max-width: 600px) { .stats-row { grid-template-columns: repeat(3, 1fr); } .books-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -90,20 +85,23 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
   <div class="lib-header">
     <h1>Mi Biblioteca</h1>
     <p>Registro personal de lecturas</p>
-    <div class="sync-status" id="syncStatus"></div>
+    <div class="sync-status sync-loading" id="syncStatus">Conectando...</div>
   </div>
   <div class="stats-row" id="statsRow"></div>
-  <div class="lib-controls">
-    <input type="text" id="searchInput" placeholder="Buscar por título o autor..." oninput="renderBooks()">
-    <select id="filterStatus" onchange="renderBooks()">
-      <option value="all">Todos los estados</option>
-      <option value="reading">Leyendo</option>
-      <option value="done">Terminados</option>
-      <option value="pending">Pendientes</option>
-      <option value="recommended">Recomendados</option>
-    </select>
-    <button class="btn-config" onclick="openConfig()">⚙ API Key</button>
-    <button class="btn-add" onclick="openModal()">+ Agregar libro</button>
+  <div style="margin-bottom:1.5rem;">
+    <input type="text" id="searchInput" placeholder="Buscar por título o autor..." oninput="window.renderBooks()" style="width:100%;padding:8px 12px;font-size:14px;border:0.5px solid #ccc;border-radius:8px;background:#fff;color:#1a1a1a;font-family:Lato,sans-serif;margin-bottom:10px;box-sizing:border-box;">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+      <select id="filterStatus" style="flex:1;min-width:140px;padding:8px 12px;font-size:13px;border:0.5px solid #ccc;border-radius:8px;background:#fff;color:#555;font-family:Lato,sans-serif;">
+        <option value="all">Todos los estados</option>
+        <option value="reading">Leyendo</option>
+        <option value="done">Terminados</option>
+        <option value="pending">Pendientes</option>
+        <option value="recommended">Recomendados</option>
+      </select>
+      <button onclick="window.renderBooks()" style="padding:8px 14px;font-size:13px;font-family:Lato,sans-serif;font-weight:700;border:0.5px solid #1D9E75;border-radius:8px;background:#E1F5EE;color:#0F6E56;cursor:pointer;">Aplicar</button>
+      <button onclick="window.openConfig()" style="padding:8px 12px;font-size:13px;border:0.5px solid #ccc;border-radius:8px;background:transparent;color:#666;cursor:pointer;font-family:Lato,sans-serif;">⚙ API Key</button>
+      <button onclick="window.openModal()" style="padding:8px 14px;font-size:13px;font-family:Lato,sans-serif;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;border:0.5px solid #666;border-radius:8px;background:#fff;color:#1a1a1a;cursor:pointer;">+ Agregar</button>
+    </div>
   </div>
   <div class="books-grid" id="booksGrid"></div>
 </div>
@@ -116,12 +114,12 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
       <p style="font-size:13px;color:#666;margin-bottom:10px;line-height:1.5;">Ingresa tu API Key para activar las descripciones automáticas. Se guarda solo en este navegador.</p>
       <div class="key-input-row">
         <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-...">
-        <button class="btn-primary" onclick="saveApiKey()">Guardar</button>
+        <button class="btn-primary" onclick="window.saveApiKey()">Guardar</button>
       </div>
       <div class="key-saved" id="keySaved">✓ API Key guardada correctamente</div>
     </div>
     <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeConfig()">Cerrar</button>
+      <button class="btn-cancel" onclick="window.closeConfig()">Cerrar</button>
     </div>
   </div>
 </div>
@@ -129,26 +127,18 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <h2 id="modalTitle">Agregar libro</h2>
-    <div class="form-row">
-      <label>Título</label>
-      <input type="text" id="fTitle" placeholder="Título del libro">
-    </div>
-    <div class="form-row">
-      <label>Autor</label>
-      <input type="text" id="fAuthor" placeholder="Nombre del autor">
-    </div>
+    <div class="form-row"><label>Título</label><input type="text" id="fTitle" placeholder="Título del libro"></div>
+    <div class="form-row"><label>Autor</label><input type="text" id="fAuthor" placeholder="Nombre del autor"></div>
     <div class="form-row-2">
-      <div class="form-row">
-        <label>Estado</label>
-        <select id="fStatus" onchange="toggleRecFields()">
+      <div class="form-row"><label>Estado</label>
+        <select id="fStatus" onchange="window.toggleRecFields()">
           <option value="reading">Leyendo</option>
           <option value="done">Terminado</option>
           <option value="pending">Pendiente</option>
           <option value="recommended">Recomendado</option>
         </select>
       </div>
-      <div class="form-row">
-        <label>Formato</label>
+      <div class="form-row"><label>Formato</label>
         <select id="fFormat">
           <option value="Kindle">Kindle</option>
           <option value="Papel">Papel</option>
@@ -158,32 +148,22 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
     </div>
     <div class="rec-section" id="recFields" style="display:none">
       <div class="rec-section-title">Datos de la recomendación</div>
-      <div class="form-row">
-        <label>Recomendado por</label>
-        <input type="text" id="fRecBy" placeholder="Ej: Claude, un amigo, artículo...">
-      </div>
-      <div class="form-row">
-        <label>Fuente o contexto</label>
-        <input type="text" id="fRecSource" placeholder="Ej: Conversación sobre IA, NYT Books...">
-      </div>
+      <div class="form-row"><label>Recomendado por</label><input type="text" id="fRecBy" placeholder="Ej: Claude, un amigo..."></div>
+      <div class="form-row"><label>Fuente o contexto</label><input type="text" id="fRecSource" placeholder="Ej: Conversación sobre IA..."></div>
     </div>
     <div class="form-row-2">
-      <div class="form-row">
-        <label>Idioma</label>
+      <div class="form-row"><label>Idioma</label>
         <select id="fLang">
           <option value="Inglés">Inglés</option>
           <option value="Español">Español</option>
           <option value="Otro">Otro</option>
         </select>
       </div>
-      <div class="form-row">
-        <label>Valoración</label>
+      <div class="form-row"><label>Valoración</label>
         <select id="fRating">
           <option value="0">Sin valorar</option>
-          <option value="1">★</option>
-          <option value="2">★★</option>
-          <option value="3">★★★</option>
-          <option value="4">★★★★</option>
+          <option value="1">★</option><option value="2">★★</option>
+          <option value="3">★★★</option><option value="4">★★★★</option>
           <option value="5">★★★★★</option>
         </select>
       </div>
@@ -191,216 +171,178 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
     <div class="form-row">
       <label>Descripción del libro</label>
       <div class="desc-row">
-        <textarea id="fDescription" placeholder="Breve sinopsis del libro..." style="min-height:80px"></textarea>
-        <button class="btn-generate" id="btnGenerate" onclick="generateDescription()">Generar<br>con IA</button>
+        <textarea id="fDescription" placeholder="Breve sinopsis..." style="min-height:80px"></textarea>
+        <button class="btn-generate" id="btnGenerate" onclick="window.generateDescription()">Generar<br>con IA</button>
       </div>
       <div class="api-notice" id="apiNotice"></div>
     </div>
-    <div class="form-row">
-      <label>Notas personales</label>
-      <textarea id="fNotes" placeholder="Lo que te dejó el libro..."></textarea>
-    </div>
+    <div class="form-row"><label>Notas personales</label><textarea id="fNotes" placeholder="Lo que te dejó el libro..."></textarea></div>
     <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
-      <button class="btn-primary" onclick="saveBook()">Guardar</button>
+      <button class="btn-cancel" onclick="window.closeModal()">Cancelar</button>
+      <button class="btn-primary" onclick="window.saveBook()">Guardar</button>
     </div>
   </div>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+var books = [];
+var editingId = null;
+var apiKey = '';
+var initialized = false;
+var db, colRef;
 
-const firebaseConfig = {
-  apiKey: "AIzaSyALC_gWQgWVo4DgIsHR-E57nNGE7bjqsqo",
-  authDomain: "mi-biblioteca-4652c.firebaseapp.com",
-  projectId: "mi-biblioteca-4652c",
-  storageBucket: "mi-biblioteca-4652c.firebasestorage.app",
-  messagingSenderId: "820593188553",
-  appId: "1:820593188553:web:a6963873fe98f7f32c7718"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const colRef = collection(db, "libros");
-
-const INITIAL_BOOKS = [
-  { id: "1", title: "The Magic Mountain", author: "Thomas Mann", status: "reading", format: "Papel", lang: "Inglés", rating: 0, description: "Novela filosófica monumental ambientada en un sanatorio suizo antes de la Primera Guerra Mundial, donde Hans Castorp reflexiona sobre el tiempo, la enfermedad y la condición humana.", notes: "En curso.", recBy: "", recSource: "" },
-  { id: "2", title: "Exodus", author: "Peter F. Hamilton", status: "reading", format: "Kindle", lang: "Inglés", rating: 0, description: "", notes: "En curso.", recBy: "", recSource: "" },
-  { id: "3", title: "Keith Jarrett: A Biography", author: "Wolfgang Sandner", status: "reading", format: "Papel", lang: "Inglés", rating: 0, description: "Biografía del pianista de jazz Keith Jarrett, explorando su vida, su proceso creativo y las circunstancias legendarias detrás de grabaciones como The Köln Concert.", notes: "Favorito: The Köln Concert.", recBy: "", recSource: "" },
-  { id: "4", title: "The Remains of the Day", author: "Kazuo Ishiguro", status: "done", format: "Papel", lang: "Inglés", rating: 5, description: "Un mayordomo inglés recorre el campo reflexionando sobre su vida de servicio, la dignidad profesional y los sentimientos reprimidos durante décadas.", notes: "", recBy: "", recSource: "" },
-  { id: "5", title: "Klara and the Sun", author: "Kazuo Ishiguro", status: "done", format: "Papel", lang: "Inglés", rating: 5, description: "Una robot amiga artificial observa el mundo desde la vitrina de una tienda mientras espera ser adoptada, reflexionando sobre el amor, la conciencia y qué significa ser humano.", notes: "Extraordinaria reflexión sobre la conciencia.", recBy: "", recSource: "" },
-  { id: "6", title: "Never Let Me Go", author: "Kazuo Ishiguro", status: "done", format: "Papel", lang: "Inglés", rating: 5, description: "Tres amigos criados en una escuela inglesa descubren gradualmente su destino como donantes de órganos, en una meditación sobre la memoria, la mortalidad y el amor.", notes: "Devastadoramente bella.", recBy: "", recSource: "" },
-  { id: "7", title: "Machines Like Me", author: "Ian McEwan", status: "done", format: "Papel", lang: "Inglés", rating: 4, description: "En una Londres alternativa de los 80, un hombre compra uno de los primeros androides con IA, desencadenando un triángulo amoroso y profundos dilemas éticos sobre conciencia y moralidad.", notes: "Dilemas éticos sobre IA muy vigentes.", recBy: "", recSource: "" },
-  { id: "8", title: "Speak", author: "Louisa Hall", status: "recommended", format: "Kindle", lang: "Inglés", rating: 0, description: "Cinco voces a través de los siglos convergen en torno a la pregunta de qué significa realmente comunicarse, con Alan Turing como uno de sus narradores.", notes: "", recBy: "Claude", recSource: "Conversación sobre literatura e IA — marzo 2026" },
-  { id: "9", title: "Exhalation: Stories", author: "Ted Chiang", status: "recommended", format: "Kindle", lang: "Inglés", rating: 0, description: "Colección de relatos de ciencia ficción filosófica sobre libre albedrío, memoria y conciencia. La historia Story of Your Life inspiró la película Arrival.", notes: "", recBy: "Claude", recSource: "Conversación sobre literatura e IA — marzo 2026" },
-  { id: "10", title: "The Age of AI", author: "Kissinger, Schmidt & Huttenlocher", status: "recommended", format: "Kindle", lang: "Inglés", rating: 0, description: "Tres perspectivas sobre cómo la inteligencia artificial transforma la sociedad, la geopolítica y el significado de ser humano.", notes: "", recBy: "Claude", recSource: "Conversación sobre literatura e IA — marzo 2026" },
-  { id: "11", title: "Human Compatible", author: "Stuart Russell", status: "recommended", format: "Kindle", lang: "Inglés", rating: 0, description: "El pionero de la IA Stuart Russell argumenta que debemos rediseñar la IA desde sus fundamentos para garantizar que sea compatible con los valores humanos.", notes: "", recBy: "Claude", recSource: "Conversación sobre literatura e IA — marzo 2026" }
+var INITIAL_BOOKS = [
+  {id:"1",title:"The Magic Mountain",author:"Thomas Mann",status:"reading",format:"Papel",lang:"Inglés",rating:0,description:"Novela filosófica monumental ambientada en un sanatorio suizo antes de la Primera Guerra Mundial, donde Hans Castorp reflexiona sobre el tiempo, la enfermedad y la condición humana.",notes:"En curso.",recBy:"",recSource:""},
+  {id:"2",title:"Exodus",author:"Peter F. Hamilton",status:"reading",format:"Kindle",lang:"Inglés",rating:0,description:"",notes:"En curso.",recBy:"",recSource:""},
+  {id:"3",title:"Keith Jarrett: A Biography",author:"Wolfgang Sandner",status:"reading",format:"Papel",lang:"Inglés",rating:0,description:"Biografía del pianista de jazz Keith Jarrett, explorando su vida, su proceso creativo y las circunstancias legendarias detrás de grabaciones como The Köln Concert.",notes:"Favorito: The Köln Concert.",recBy:"",recSource:""},
+  {id:"4",title:"The Remains of the Day",author:"Kazuo Ishiguro",status:"done",format:"Papel",lang:"Inglés",rating:5,description:"Un mayordomo inglés recorre el campo reflexionando sobre su vida de servicio, la dignidad profesional y los sentimientos reprimidos durante décadas.",notes:"",recBy:"",recSource:""},
+  {id:"5",title:"Klara and the Sun",author:"Kazuo Ishiguro",status:"done",format:"Papel",lang:"Inglés",rating:5,description:"Una robot amiga artificial observa el mundo desde la vitrina de una tienda mientras espera ser adoptada, reflexionando sobre el amor, la conciencia y qué significa ser humano.",notes:"Extraordinaria reflexión sobre la conciencia.",recBy:"",recSource:""},
+  {id:"6",title:"Never Let Me Go",author:"Kazuo Ishiguro",status:"done",format:"Papel",lang:"Inglés",rating:5,description:"Tres amigos criados en una escuela inglesa descubren gradualmente su destino como donantes de órganos, en una meditación sobre la memoria, la mortalidad y el amor.",notes:"Devastadoramente bella.",recBy:"",recSource:""},
+  {id:"7",title:"Machines Like Me",author:"Ian McEwan",status:"done",format:"Papel",lang:"Inglés",rating:4,description:"En una Londres alternativa de los 80, un hombre compra uno de los primeros androides con IA, desencadenando un triángulo amoroso y profundos dilemas éticos sobre conciencia y moralidad.",notes:"Dilemas éticos sobre IA muy vigentes.",recBy:"",recSource:""},
+  {id:"8",title:"Speak",author:"Louisa Hall",status:"recommended",format:"Kindle",lang:"Inglés",rating:0,description:"Cinco voces a través de los siglos convergen en torno a la pregunta de qué significa realmente comunicarse, con Alan Turing como uno de sus narradores.",notes:"",recBy:"Claude",recSource:"Conversación sobre literatura e IA — marzo 2026"},
+  {id:"9",title:"Exhalation: Stories",author:"Ted Chiang",status:"recommended",format:"Kindle",lang:"Inglés",rating:0,description:"Colección de relatos de ciencia ficción filosófica sobre libre albedrío, memoria y conciencia. La historia Story of Your Life inspiró la película Arrival.",notes:"",recBy:"Claude",recSource:"Conversación sobre literatura e IA — marzo 2026"},
+  {id:"10",title:"The Age of AI",author:"Kissinger, Schmidt & Huttenlocher",status:"recommended",format:"Kindle",lang:"Inglés",rating:0,description:"Tres perspectivas sobre cómo la inteligencia artificial transforma la sociedad, la geopolítica y el significado de ser humano.",notes:"",recBy:"Claude",recSource:"Conversación sobre literatura e IA — marzo 2026"},
+  {id:"11",title:"Human Compatible",author:"Stuart Russell",status:"recommended",format:"Kindle",lang:"Inglés",rating:0,description:"El pionero de la IA Stuart Russell argumenta que debemos rediseñar la IA desde sus fundamentos para garantizar que sea compatible con los valores humanos.",notes:"",recBy:"Claude",recSource:"Conversación sobre literatura e IA — marzo 2026"}
 ];
 
-let books = [];
-let editingId = null;
-let apiKey = '';
-let initialized = false;
-
 function setSyncStatus(msg, type) {
-  const el = document.getElementById('syncStatus');
+  var el = document.getElementById('syncStatus');
   el.textContent = msg;
   el.className = 'sync-status sync-' + type;
 }
 
-onSnapshot(colRef, (snapshot) => {
-  if (!initialized && snapshot.empty) {
-    setSyncStatus('Cargando biblioteca inicial...', 'loading');
-    Promise.all(INITIAL_BOOKS.map(b => setDoc(doc(db, 'libros', b.id), b)))
-      .then(() => { initialized = true; setSyncStatus('✓ Sincronizado', 'ok'); })
-      .catch(() => setSyncStatus('Error al inicializar', 'err'));
-    return;
-  }
-  initialized = true;
-  books = snapshot.docs.map(d => d.data());
-  books.sort((a, b) => String(a.id).localeCompare(String(b.id)));
-  render();
-  setSyncStatus('✓ Sincronizado', 'ok');
-}, (error) => {
-  setSyncStatus('Error de conexión', 'err');
-});
-
-async function saveBookToFirebase(book) {
-  try {
-    setSyncStatus('Guardando...', 'loading');
-    await setDoc(doc(db, 'libros', String(book.id)), book);
-    setSyncStatus('✓ Sincronizado', 'ok');
-  } catch(e) { setSyncStatus('Error al guardar', 'err'); }
-}
-
-async function deleteBookFromFirebase(id) {
-  try {
-    setSyncStatus('Eliminando...', 'loading');
-    await deleteDoc(doc(db, 'libros', String(id)));
-    setSyncStatus('✓ Sincronizado', 'ok');
-  } catch(e) { setSyncStatus('Error al eliminar', 'err'); }
-}
-
-function render() { renderStats(); renderBooks(); }
+window.renderBooks = function() {
+  var q = document.getElementById('searchInput').value.toLowerCase();
+  var fs = document.getElementById('filterStatus').value;
+  var filtered = books.filter(function(b) {
+    var matchQ = !q || b.title.toLowerCase().indexOf(q) >= 0 || b.author.toLowerCase().indexOf(q) >= 0;
+    var matchS = fs === 'all' || b.status === fs;
+    return matchQ && matchS;
+  });
+  var grid = document.getElementById('booksGrid');
+  if (!filtered.length) { grid.innerHTML = '<div class="empty-state">No hay libros que coincidan.</div>'; return; }
+  var sLabel = {reading:'Leyendo',done:'Terminado',pending:'Pendiente',recommended:'Recomendado'};
+  var sClass = {reading:'badge-reading',done:'badge-done',pending:'badge-pending',recommended:'badge-recommended'};
+  function stars(n) { return n > 0 ? '★'.repeat(n)+'☆'.repeat(5-n) : ''; }
+  grid.innerHTML = filtered.map(function(b) {
+    return '<div class="book-card status-'+b.status+'">'+
+      '<div class="book-status-bar"></div>'+
+      '<div class="book-title">'+b.title+'</div>'+
+      '<div class="book-author">'+b.author+'</div>'+
+      '<div class="book-meta">'+
+        '<span class="badge '+sClass[b.status]+'">'+sLabel[b.status]+'</span>'+
+        '<span class="badge badge-format">'+b.format+'</span>'+
+        '<span class="badge badge-format">'+b.lang+'</span>'+
+      '</div>'+
+      (b.rating>0?'<div class="book-stars">'+stars(b.rating)+'</div>':'')+
+      (b.description?'<div class="book-description">'+b.description+'</div>':'')+
+      (b.status==='recommended'&&b.recBy?'<div class="book-rec-source">Recomendado por <span>'+b.recBy+'</span>'+(b.recSource?' · '+b.recSource:'')+'</div>':'')+
+      (b.notes?'<div class="book-notes">'+b.notes+'</div>':'')+
+      '<div class="book-actions">'+
+        '<button class="btn-sm" onclick="window.editBook(\''+b.id+'\')">Editar</button>'+
+        '<button class="btn-sm btn-del" onclick="window.deleteBook(\''+b.id+'\')">Eliminar</button>'+
+      '</div></div>';
+  }).join('');
+};
 
 function renderStats() {
-  const total = books.length, reading = books.filter(b=>b.status==='reading').length,
-    done = books.filter(b=>b.status==='done').length, pending = books.filter(b=>b.status==='pending').length,
-    recommended = books.filter(b=>b.status==='recommended').length;
-  document.getElementById('statsRow').innerHTML = `
-    <div class="stat-card"><div class="stat-num">${total}</div><div class="stat-label">Total</div></div>
-    <div class="stat-card"><div class="stat-num" style="color:#1D9E75">${reading}</div><div class="stat-label">Leyendo</div></div>
-    <div class="stat-card"><div class="stat-num" style="color:#534AB7">${done}</div><div class="stat-label">Terminados</div></div>
-    <div class="stat-card"><div class="stat-num" style="color:#888780">${pending}</div><div class="stat-label">Pendientes</div></div>
-    <div class="stat-card"><div class="stat-num" style="color:#BA7517">${recommended}</div><div class="stat-label">Recomendados</div></div>`;
+  var total=books.length, reading=0, done=0, pending=0, recommended=0;
+  books.forEach(function(b){
+    if(b.status==='reading') reading++;
+    else if(b.status==='done') done++;
+    else if(b.status==='pending') pending++;
+    else if(b.status==='recommended') recommended++;
+  });
+  document.getElementById('statsRow').innerHTML =
+    '<div class="stat-card"><div class="stat-num">'+total+'</div><div class="stat-label">Total</div></div>'+
+    '<div class="stat-card"><div class="stat-num" style="color:#1D9E75">'+reading+'</div><div class="stat-label">Leyendo</div></div>'+
+    '<div class="stat-card"><div class="stat-num" style="color:#534AB7">'+done+'</div><div class="stat-label">Terminados</div></div>'+
+    '<div class="stat-card"><div class="stat-num" style="color:#888780">'+pending+'</div><div class="stat-label">Pendientes</div></div>'+
+    '<div class="stat-card"><div class="stat-num" style="color:#BA7517">'+recommended+'</div><div class="stat-label">Recomendados</div></div>';
 }
 
-function renderBooks() {
-  const q = document.getElementById('searchInput').value.toLowerCase();
-  const fs = document.getElementById('filterStatus').value;
-  const filtered = books.filter(b => (!q || b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q)) && (fs==='all' || b.status===fs));
-  const grid = document.getElementById('booksGrid');
-  if (!filtered.length) { grid.innerHTML = '<div class="empty-state">No hay libros que coincidan.</div>'; return; }
-  const sLabel = {reading:'Leyendo',done:'Terminado',pending:'Pendiente',recommended:'Recomendado'};
-  const sClass = {reading:'badge-reading',done:'badge-done',pending:'badge-pending',recommended:'badge-recommended'};
-  const stars = n => n > 0 ? '★'.repeat(n)+'☆'.repeat(5-n) : '';
-  grid.innerHTML = filtered.map(b => `
-    <div class="book-card status-${b.status}">
-      <div class="book-status-bar"></div>
-      <div class="book-title">${b.title}</div>
-      <div class="book-author">${b.author}</div>
-      <div class="book-meta">
-        <span class="badge ${sClass[b.status]}">${sLabel[b.status]}</span>
-        <span class="badge badge-format">${b.format}</span>
-        <span class="badge badge-format">${b.lang}</span>
-      </div>
-      ${b.rating>0?`<div class="book-stars">${stars(b.rating)}</div>`:''}
-      ${b.description?`<div class="book-description">${b.description}</div>`:''}
-      ${b.status==='recommended'&&b.recBy?`<div class="book-rec-source">Recomendado por <span>${b.recBy}</span>${b.recSource?' · '+b.recSource:''}</div>`:''}
-      ${b.notes?`<div class="book-notes">${b.notes}</div>`:''}
-      <div class="book-actions">
-        <button class="btn-sm" onclick="window.editBook('${b.id}')">Editar</button>
-        <button class="btn-sm btn-del" onclick="window.deleteBook('${b.id}')">Eliminar</button>
-      </div>
-    </div>`).join('');
-}
+function render() { renderStats(); window.renderBooks(); }
 
 window.openConfig = function() {
   try { apiKey = localStorage.getItem('biblioteca_apikey') || ''; } catch(e) {}
   if (apiKey) document.getElementById('apiKeyInput').value = apiKey;
   document.getElementById('configOverlay').classList.add('open');
-}
-window.closeConfig = function() { document.getElementById('configOverlay').classList.remove('open'); }
+};
+window.closeConfig = function() { document.getElementById('configOverlay').classList.remove('open'); };
 window.saveApiKey = function() {
-  const val = document.getElementById('apiKeyInput').value.trim();
+  var val = document.getElementById('apiKeyInput').value.trim();
   if (!val) return;
   apiKey = val;
   try { localStorage.setItem('biblioteca_apikey', val); } catch(e) {}
   document.getElementById('keySaved').style.display = 'block';
-  setTimeout(()=>{ document.getElementById('keySaved').style.display='none'; }, 2000);
-}
+  setTimeout(function(){ document.getElementById('keySaved').style.display='none'; }, 2000);
+};
 
-window.generateDescription = async function() {
-  const title = document.getElementById('fTitle').value.trim();
-  const author = document.getElementById('fAuthor').value.trim();
+window.generateDescription = function() {
+  var title = document.getElementById('fTitle').value.trim();
+  var author = document.getElementById('fAuthor').value.trim();
   if (!title||!author) { document.getElementById('apiNotice').textContent='Ingresa título y autor primero.'; return; }
-  if (!apiKey) {
-    try { apiKey = localStorage.getItem('biblioteca_apikey') || ''; } catch(e) {}
-  }
-  if (!apiKey) { document.getElementById('apiNotice').textContent='Configura tu API Key primero (botón ⚙ API Key).'; return; }
-  const btn = document.getElementById('btnGenerate');
-  btn.disabled = true; btn.textContent = 'Generando...';
-  document.getElementById('apiNotice').textContent = '';
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true' },
-      body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:200, messages:[{role:'user',content:`Escribe una sinopsis breve (máximo 3 oraciones) del libro "${title}" de ${author}. Solo la sinopsis, sin introducción ni comentarios adicionales.`}] })
-    });
-    const data = await response.json();
-    if (data.content&&data.content[0]&&data.content[0].text) {
-      document.getElementById('fDescription').value = data.content[0].text;
+  if (!apiKey) { try { apiKey = localStorage.getItem('biblioteca_apikey')||''; } catch(e){} }
+  if (!apiKey) { document.getElementById('apiNotice').textContent='Configura tu API Key primero.'; return; }
+  var btn = document.getElementById('btnGenerate');
+  btn.disabled=true; btn.textContent='Generando...';
+  document.getElementById('apiNotice').textContent='';
+  fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:200,messages:[{role:'user',content:'Escribe una sinopsis breve (máximo 3 oraciones) del libro "'+title+'" de '+author+'. Solo la sinopsis, sin introducción ni comentarios adicionales.'}]})
+  }).then(function(r){return r.json();}).then(function(data){
+    if(data.content&&data.content[0]&&data.content[0].text){
+      document.getElementById('fDescription').value=data.content[0].text;
     } else { document.getElementById('apiNotice').textContent='No se pudo generar. Verifica tu API Key.'; }
-  } catch(e) { document.getElementById('apiNotice').textContent='Error de conexión. Inténtalo de nuevo.'; }
-  btn.disabled=false; btn.innerHTML='Generar<br>con IA';
-}
+    btn.disabled=false; btn.innerHTML='Generar<br>con IA';
+  }).catch(function(){
+    document.getElementById('apiNotice').textContent='Error de conexión.';
+    btn.disabled=false; btn.innerHTML='Generar<br>con IA';
+  });
+};
 
 window.toggleRecFields = function() {
   document.getElementById('recFields').style.display = document.getElementById('fStatus').value==='recommended'?'block':'none';
-}
+};
 
-window.openModal = function(id=null) {
-  editingId=id;
-  const b=id?books.find(x=>String(x.id)===String(id)):null;
-  document.getElementById('modalTitle').textContent=id?'Editar libro':'Agregar libro';
-  document.getElementById('fTitle').value=b?b.title:'';
-  document.getElementById('fAuthor').value=b?b.author:'';
-  document.getElementById('fStatus').value=b?b.status:'pending';
-  document.getElementById('fFormat').value=b?b.format:'Kindle';
-  document.getElementById('fLang').value=b?b.lang:'Inglés';
-  document.getElementById('fRating').value=b?b.rating:0;
-  document.getElementById('fDescription').value=b?(b.description||''):'';
-  document.getElementById('fNotes').value=b?b.notes:'';
-  document.getElementById('fRecBy').value=b?(b.recBy||''):'';
-  document.getElementById('fRecSource').value=b?(b.recSource||''):'';
+window.openModal = function(id) {
+  id = id || null; editingId = id;
+  var b = id ? books.find(function(x){return String(x.id)===String(id);}) : null;
+  document.getElementById('modalTitle').textContent = id?'Editar libro':'Agregar libro';
+  document.getElementById('fTitle').value = b?b.title:'';
+  document.getElementById('fAuthor').value = b?b.author:'';
+  document.getElementById('fStatus').value = b?b.status:'pending';
+  document.getElementById('fFormat').value = b?b.format:'Kindle';
+  document.getElementById('fLang').value = b?b.lang:'Inglés';
+  document.getElementById('fRating').value = b?b.rating:0;
+  document.getElementById('fDescription').value = b?(b.description||''):'';
+  document.getElementById('fNotes').value = b?b.notes:'';
+  document.getElementById('fRecBy').value = b?(b.recBy||''):'';
+  document.getElementById('fRecSource').value = b?(b.recSource||''):'';
   document.getElementById('apiNotice').textContent='';
   window.toggleRecFields();
   document.getElementById('modalOverlay').classList.add('open');
-}
+};
 
-window.closeModal = function() { document.getElementById('modalOverlay').classList.remove('open'); editingId=null; }
-window.editBook = function(id) { window.openModal(id); }
-window.deleteBook = async function(id) {
+window.closeModal = function() { document.getElementById('modalOverlay').classList.remove('open'); editingId=null; };
+window.editBook = function(id) { window.openModal(id); };
+window.deleteBook = function(id) {
   if (!confirm('¿Eliminar este libro?')) return;
-  await deleteBookFromFirebase(id);
-}
-window.saveBook = async function() {
-  const title=document.getElementById('fTitle').value.trim(), author=document.getElementById('fAuthor').value.trim();
-  if (!title||!author) { alert('Título y autor son obligatorios.'); return; }
-  const book={
-    id: editingId ? String(editingId) : String(Date.now()),
-    title, author,
+  setSyncStatus('Eliminando...','loading');
+  colRef.doc(String(id)).delete()
+    .then(function(){setSyncStatus('✓ Sincronizado','ok');})
+    .catch(function(){setSyncStatus('Error al eliminar','err');});
+};
+window.saveBook = function() {
+  var title=document.getElementById('fTitle').value.trim();
+  var author=document.getElementById('fAuthor').value.trim();
+  if(!title||!author){alert('Título y autor son obligatorios.');return;}
+  var book={
+    id:editingId?String(editingId):String(Date.now()),
+    title:title,author:author,
     status:document.getElementById('fStatus').value,
     format:document.getElementById('fFormat').value,
     lang:document.getElementById('fLang').value,
@@ -411,14 +353,48 @@ window.saveBook = async function() {
     recSource:document.getElementById('fRecSource').value.trim()
   };
   window.closeModal();
-  await saveBookToFirebase(book);
-}
+  setSyncStatus('Guardando...','loading');
+  colRef.doc(String(book.id)).set(book)
+    .then(function(){setSyncStatus('✓ Sincronizado','ok');})
+    .catch(function(){setSyncStatus('Error al guardar','err');});
+};
 
 document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)window.closeModal();});
 document.getElementById('configOverlay').addEventListener('click',function(e){if(e.target===this)window.closeConfig();});
 
-try { apiKey = localStorage.getItem('biblioteca_apikey') || ''; } catch(e) {}
-setSyncStatus('Conectando...', 'loading');
+try { apiKey = localStorage.getItem('biblioteca_apikey')||''; } catch(e) {}
+
+var firebaseConfig = {
+  apiKey: "AIzaSyALC_gWQgWVo4DgIsHR-E57nNGE7bjqsqo",
+  authDomain: "mi-biblioteca-4652c.firebaseapp.com",
+  projectId: "mi-biblioteca-4652c",
+  storageBucket: "mi-biblioteca-4652c.firebasestorage.app",
+  messagingSenderId: "820593188553",
+  appId: "1:820593188553:web:a6963873fe98f7f32c7718"
+};
+
+firebase.initializeApp(firebaseConfig);
+db = firebase.firestore();
+colRef = db.collection("libros");
+
+colRef.onSnapshot(function(snapshot) {
+  if (!initialized && snapshot.empty) {
+    setSyncStatus('Cargando biblioteca inicial...','loading');
+    var batch = db.batch();
+    INITIAL_BOOKS.forEach(function(b){ batch.set(colRef.doc(b.id), b); });
+    batch.commit()
+      .then(function(){initialized=true; setSyncStatus('✓ Sincronizado','ok');})
+      .catch(function(){setSyncStatus('Error al inicializar','err');});
+    return;
+  }
+  initialized = true;
+  books = snapshot.docs.map(function(d){return d.data();});
+  books.sort(function(a,b){return String(a.id).localeCompare(String(b.id));});
+  render();
+  setSyncStatus('✓ Sincronizado','ok');
+}, function(){
+  setSyncStatus('Error de conexión','err');
+});
 </script>
 </body>
 </html>
