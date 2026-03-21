@@ -21,7 +21,7 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
 .btn-add:hover { background: #f0ede8; }
 .btn-config { padding: 8px 12px; font-size: 13px; border: 0.5px solid #ccc; border-radius: 8px; background: transparent; color: #666; cursor: pointer; font-family: 'Lato', sans-serif; }
 .btn-config:hover { background: #f0ede8; }
-.stats-row { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
+.stats-row { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
 .stat-card { background: #fff; border: 0.5px solid #e0ddd8; border-radius: 8px; padding: 12px; text-align: center; }
 .stat-num { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 400; color: #1a1a1a; line-height: 1; }
 .stat-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; font-weight: 300; }
@@ -33,6 +33,7 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
 .status-done .book-status-bar { background: #534AB7; }
 .status-pending .book-status-bar { background: #888780; }
 .status-recommended .book-status-bar { background: #BA7517; }
+.status-lent .book-status-bar { background: #1565C0; }
 .book-title { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 500; color: #1a1a1a; line-height: 1.3; margin-bottom: 4px; padding-left: 12px; }
 .book-author { font-size: 13px; color: #666; font-style: italic; padding-left: 12px; margin-bottom: 10px; }
 .book-meta { display: flex; gap: 8px; flex-wrap: wrap; padding-left: 12px; margin-bottom: 10px; }
@@ -41,6 +42,7 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
 .badge-done { background: #EEEDFE; color: #3C3489; }
 .badge-pending { background: #F1EFE8; color: #5F5E5A; }
 .badge-recommended { background: #FAEEDA; color: #633806; }
+.badge-lent { background: #E3F0FD; color: #0D47A1; }
 .badge-format { background: #f0ede8; color: #666; }
 .book-stars { padding-left: 12px; margin-bottom: 8px; font-size: 14px; letter-spacing: 2px; color: #BA7517; }
 .book-rec-source { font-size: 12px; color: #888; padding-left: 12px; margin-bottom: 8px; font-style: italic; }
@@ -97,6 +99,7 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
         <option value="done">Terminados</option>
         <option value="pending">Pendientes</option>
         <option value="recommended">Recomendados</option>
+        <option value="lent">Prestados</option>
       </select>
       <button onclick="window.renderBooks()" style="padding:8px 14px;font-size:13px;font-family:Lato,sans-serif;font-weight:700;border:0.5px solid #1D9E75;border-radius:8px;background:#E1F5EE;color:#0F6E56;cursor:pointer;">Aplicar</button>
       <button onclick="window.openConfig()" style="padding:8px 12px;font-size:13px;border:0.5px solid #ccc;border-radius:8px;background:transparent;color:#666;cursor:pointer;font-family:Lato,sans-serif;">⚙ API Key</button>
@@ -136,6 +139,7 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
           <option value="done">Terminado</option>
           <option value="pending">Pendiente</option>
           <option value="recommended">Recomendado</option>
+          <option value="lent">Prestado</option>
         </select>
       </div>
       <div class="form-row"><label>Formato</label>
@@ -150,6 +154,11 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
       <div class="rec-section-title">Datos de la recomendación</div>
       <div class="form-row"><label>Recomendado por</label><input type="text" id="fRecBy" placeholder="Ej: Claude, un amigo..."></div>
       <div class="form-row"><label>Fuente o contexto</label><input type="text" id="fRecSource" placeholder="Ej: Conversación sobre IA..."></div>
+    </div>
+    <div class="rec-section" id="lentFields" style="display:none">
+      <div class="rec-section-title">Datos del préstamo</div>
+      <div class="form-row"><label>Prestado a</label><input type="text" id="fLentTo" placeholder="Nombre de la persona"></div>
+      <div class="form-row"><label>Fecha del préstamo</label><input type="text" id="fLentDate" placeholder="Ej: marzo 2026"></div>
     </div>
     <div class="form-row-2">
       <div class="form-row"><label>Idioma</label>
@@ -223,8 +232,8 @@ window.renderBooks = function() {
   });
   var grid = document.getElementById('booksGrid');
   if (!filtered.length) { grid.innerHTML = '<div class="empty-state">No hay libros que coincidan.</div>'; return; }
-  var sLabel = {reading:'Leyendo',done:'Terminado',pending:'Pendiente',recommended:'Recomendado'};
-  var sClass = {reading:'badge-reading',done:'badge-done',pending:'badge-pending',recommended:'badge-recommended'};
+  var sLabel = {reading:'Leyendo',done:'Terminado',pending:'Pendiente',recommended:'Recomendado',lent:'Prestado'};
+  var sClass = {reading:'badge-reading',done:'badge-done',pending:'badge-pending',recommended:'badge-recommended',lent:'badge-lent'};
   function stars(n) { return n > 0 ? '★'.repeat(n)+'☆'.repeat(5-n) : ''; }
   grid.innerHTML = filtered.map(function(b) {
     return '<div class="book-card status-'+b.status+'">'+
@@ -239,6 +248,7 @@ window.renderBooks = function() {
       (b.rating>0?'<div class="book-stars">'+stars(b.rating)+'</div>':'')+
       (b.description?'<div class="book-description">'+b.description+'</div>':'')+
       (b.status==='recommended'&&b.recBy?'<div class="book-rec-source">Recomendado por <span>'+b.recBy+'</span>'+(b.recSource?' · '+b.recSource:'')+'</div>':'')+
+      (b.status==='lent'&&b.lentTo?'<div class="book-rec-source">Prestado a <span style="color:#1565C0">'+b.lentTo+'</span>'+(b.lentDate?' · '+b.lentDate:'')+'</div>':'')+
       (b.notes?'<div class="book-notes">'+b.notes+'</div>':'')+
       '<div class="book-actions">'+
         '<button class="btn-sm" onclick="window.editBook(\''+b.id+'\')">Editar</button>'+
@@ -248,19 +258,21 @@ window.renderBooks = function() {
 };
 
 function renderStats() {
-  var total=books.length, reading=0, done=0, pending=0, recommended=0;
+  var total=books.length, reading=0, done=0, pending=0, recommended=0, lent=0;
   books.forEach(function(b){
     if(b.status==='reading') reading++;
     else if(b.status==='done') done++;
     else if(b.status==='pending') pending++;
     else if(b.status==='recommended') recommended++;
+    else if(b.status==='lent') lent++;
   });
   document.getElementById('statsRow').innerHTML =
     '<div class="stat-card"><div class="stat-num">'+total+'</div><div class="stat-label">Total</div></div>'+
     '<div class="stat-card"><div class="stat-num" style="color:#1D9E75">'+reading+'</div><div class="stat-label">Leyendo</div></div>'+
     '<div class="stat-card"><div class="stat-num" style="color:#534AB7">'+done+'</div><div class="stat-label">Terminados</div></div>'+
     '<div class="stat-card"><div class="stat-num" style="color:#888780">'+pending+'</div><div class="stat-label">Pendientes</div></div>'+
-    '<div class="stat-card"><div class="stat-num" style="color:#BA7517">'+recommended+'</div><div class="stat-label">Recomendados</div></div>';
+    '<div class="stat-card"><div class="stat-num" style="color:#BA7517">'+recommended+'</div><div class="stat-label">Recomendados</div></div>'+
+    '<div class="stat-card"><div class="stat-num" style="color:#1565C0">'+lent+'</div><div class="stat-label">Prestados</div></div>';
 }
 
 function render() { renderStats(); window.renderBooks(); }
@@ -305,7 +317,9 @@ window.generateDescription = function() {
 };
 
 window.toggleRecFields = function() {
-  document.getElementById('recFields').style.display = document.getElementById('fStatus').value==='recommended'?'block':'none';
+  var s = document.getElementById('fStatus').value;
+  document.getElementById('recFields').style.display = s === 'recommended' ? 'block' : 'none';
+  document.getElementById('lentFields').style.display = s === 'lent' ? 'block' : 'none';
 };
 
 window.openModal = function(id) {
@@ -322,6 +336,8 @@ window.openModal = function(id) {
   document.getElementById('fNotes').value = b?b.notes:'';
   document.getElementById('fRecBy').value = b?(b.recBy||''):'';
   document.getElementById('fRecSource').value = b?(b.recSource||''):'';
+  document.getElementById('fLentTo').value = b?(b.lentTo||''):'';
+  document.getElementById('fLentDate').value = b?(b.lentDate||''):'';
   document.getElementById('apiNotice').textContent='';
   window.toggleRecFields();
   document.getElementById('modalOverlay').classList.add('open');
@@ -350,7 +366,9 @@ window.saveBook = function() {
     description:document.getElementById('fDescription').value.trim(),
     notes:document.getElementById('fNotes').value.trim(),
     recBy:document.getElementById('fRecBy').value.trim(),
-    recSource:document.getElementById('fRecSource').value.trim()
+    recSource:document.getElementById('fRecSource').value.trim(),
+    lentTo:document.getElementById('fLentTo').value.trim(),
+    lentDate:document.getElementById('fLentDate').value.trim()
   };
   window.closeModal();
   setSyncStatus('Guardando...','loading');
