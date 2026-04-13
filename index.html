@@ -95,7 +95,7 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
   <div style="margin-bottom:1.5rem;">
     <input type="text" id="searchInput" placeholder="Buscar por título o autor..." oninput="window.renderBooks()" style="width:100%;padding:8px 12px;font-size:14px;border:0.5px solid #ccc;border-radius:8px;background:#fff;color:#1a1a1a;font-family:Lato,sans-serif;margin-bottom:10px;box-sizing:border-box;">
     <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-      <select id="filterStatus" style="flex:1;min-width:140px;padding:8px 12px;font-size:13px;border:0.5px solid #ccc;border-radius:8px;background:#fff;color:#555;font-family:Lato,sans-serif;">
+      <select id="filterStatus" style="display:none;">
         <option value="all">Todos los estados</option>
         <option value="reading">Leyendo</option>
         <option value="done">Terminados</option>
@@ -104,7 +104,6 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
         <option value="lent">Prestados</option>
         <option value="sample">Samples</option>
       </select>
-      <button onclick="window.renderBooks()" style="padding:8px 14px;font-size:13px;font-family:Lato,sans-serif;font-weight:700;border:0.5px solid #1D9E75;border-radius:8px;background:#E1F5EE;color:#0F6E56;cursor:pointer;">Aplicar</button>
       <button onclick="window.openConfig()" style="padding:8px 12px;font-size:13px;border:0.5px solid #ccc;border-radius:8px;background:transparent;color:#666;cursor:pointer;font-family:Lato,sans-serif;">⚙ API Key</button>
       <button onclick="window.openModal()" style="padding:8px 14px;font-size:13px;font-family:Lato,sans-serif;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;border:0.5px solid #666;border-radius:8px;background:#fff;color:#1a1a1a;cursor:pointer;">+ Agregar</button>
     </div>
