@@ -328,7 +328,7 @@ window.detectGenre = function() {
   fetch('https://api.anthropic.com/v1/messages',{
     method:'POST',
     headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:50,messages:[{role:'user',content:'¿Cuál es el género literario específico del libro "'+title+'" de '+author+'? Responde solo con el género, máximo 4 palabras, sin puntuación ni explicación. Sé específico: en lugar de "No ficción" di "Biografía", "Historia militar", "Ensayo filosófico", "Divulgación científica", etc. En lugar de "Ficción" di "Novela histórica", "Thriller psicológico", "Ciencia ficción dura", etc.'}]})
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:50,messages:[{role:'user',content:'Clasifica el libro "'+title+'" de '+author+' con DOS niveles separados por " · ": primero la forma (Novela, Cuento, Ensayo, Biografía, Memorias, Crónica, Divulgación, Poesía) y luego el tema o subgénero (filosófica, histórica, ciencia ficción, thriller, jazz, inteligencia artificial, política, etc.). Responde SOLO con esa clasificación, sin explicación. Ejemplo: "Novela · filosófica" o "Biografía · músico de jazz" o "Divulgación · inteligencia artificial".'}]})
   }).then(function(r){return r.json();}).then(function(data){
     if(data.content&&data.content[0]&&data.content[0].text){
       document.getElementById('fGenre').value=data.content[0].text.trim();
