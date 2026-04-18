@@ -1,82 +1,3 @@
-Skip to content
-atupper-del
-mi-biblioteca
-Repository navigation
-Code
-Issues
-Pull requests
-Agents
-Actions
-Projects
-Wiki
-Security and quality
-1
- (1)
-Insights
-Settings
-Important update
-On April 24 we'll start using GitHub Copilot interaction data for AI model training unless you opt out. Review this update and manage your preferences in your GitHub account settings.
-Files
-Go to file
-t
-T
-README.md
-index.html
-mi-biblioteca
-/
-index.html
-in
-main
-
-Edit
-
-Preview
-Indent mode
-
-Spaces
-Indent size
-
-2
-Line wrap mode
-
-No wrap
-Editing index.html file contents
-  1
-  2
-  3
-  4
-  5
-  6
-  7
-  8
-  9
- 10
- 11
- 12
- 13
- 14
- 15
- 16
- 17
- 18
- 19
- 20
- 21
- 22
- 23
- 24
- 25
- 26
- 27
- 28
- 29
- 30
- 31
- 32
- 33
- 34
- 35
- 36
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -113,4 +34,401 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
 .status-pending .book-status-bar { background: #888780; }
 .status-recommended .book-status-bar { background: #BA7517; }
 .status-lent .book-status-bar { background: #1565C0; }
-Use Control + Shift + m to toggle the tab key moving focus. Alternatively, use esc then tab to move to the next interactive element on the page.
+.status-sample .book-status-bar { background: #0097A7; }
+.book-title { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 500; color: #1a1a1a; line-height: 1.3; margin-bottom: 4px; padding-left: 12px; }
+.book-author { font-size: 13px; color: #666; font-style: italic; padding-left: 12px; margin-bottom: 10px; }
+.book-meta { display: flex; gap: 8px; flex-wrap: wrap; padding-left: 12px; margin-bottom: 10px; }
+.badge { font-size: 11px; padding: 3px 8px; border-radius: 8px; font-weight: 400; }
+.badge-reading { background: #E1F5EE; color: #0F6E56; }
+.badge-done { background: #EEEDFE; color: #3C3489; }
+.badge-pending { background: #F1EFE8; color: #5F5E5A; }
+.badge-recommended { background: #FAEEDA; color: #633806; }
+.badge-lent { background: #E3F0FD; color: #0D47A1; }
+.badge-sample { background: #E0F7FA; color: #006064; }
+.badge-format { background: #f0ede8; color: #666; }
+.book-stars { padding-left: 12px; margin-bottom: 8px; font-size: 14px; letter-spacing: 2px; color: #BA7517; }
+.book-rec-source { font-size: 12px; color: #888; padding-left: 12px; margin-bottom: 8px; font-style: italic; }
+.book-rec-source span { color: #BA7517; }
+.book-description { font-size: 13px; color: #555; line-height: 1.5; padding-left: 12px; margin-bottom: 8px; }
+.book-notes { font-size: 13px; color: #666; line-height: 1.5; padding-left: 12px; border-top: 0.5px solid #eee; padding-top: 8px; margin-top: 4px; font-style: italic; }
+.book-actions { display: flex; gap: 8px; padding-left: 12px; margin-top: 10px; }
+.btn-sm { font-size: 11px; padding: 4px 10px; border: 0.5px solid #ccc; border-radius: 8px; background: transparent; color: #666; cursor: pointer; font-family: 'Lato', sans-serif; }
+.btn-sm:hover { background: #f0ede8; color: #1a1a1a; }
+.btn-del:hover { color: #A32D2D; border-color: #F09595; background: #FCEBEB; }
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 100; align-items: center; justify-content: center; }
+.modal-overlay.open { display: flex; }
+.modal { background: #fff; border-radius: 12px; padding: 1.5rem; width: 90%; max-width: 460px; border: 0.5px solid #ccc; max-height: 90vh; overflow-y: auto; }
+.modal h2 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 400; margin-bottom: 1rem; color: #1a1a1a; }
+.form-row { margin-bottom: 12px; }
+.form-row label { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 0.07em; color: #888; margin-bottom: 4px; }
+.form-row input, .form-row select, .form-row textarea { width: 100%; padding: 8px 10px; font-size: 14px; border: 0.5px solid #ccc; border-radius: 8px; background: #fff; color: #1a1a1a; font-family: 'Lato', sans-serif; }
+.form-row textarea { resize: vertical; min-height: 70px; }
+.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.rec-section { background: #f9f7f3; border-radius: 8px; padding: 12px; margin-bottom: 12px; border: 0.5px solid #e0ddd8; }
+.rec-section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 10px; }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 1rem; }
+.btn-primary { padding: 8px 18px; font-size: 13px; font-family: 'Lato', sans-serif; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; border: none; border-radius: 8px; background: #1a1a1a; color: #fff; cursor: pointer; }
+.btn-primary:hover { background: #333; }
+.btn-cancel { padding: 8px 18px; font-size: 13px; font-family: 'Lato', sans-serif; border: 0.5px solid #ccc; border-radius: 8px; background: transparent; color: #666; cursor: pointer; }
+.btn-generate { padding: 7px 14px; font-size: 12px; font-family: 'Lato', sans-serif; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; border: 0.5px solid #1D9E75; border-radius: 8px; background: #E1F5EE; color: #0F6E56; cursor: pointer; white-space: nowrap; }
+.btn-generate:hover { background: #9FE1CB; }
+.btn-generate:disabled { opacity: 0.5; cursor: not-allowed; }
+.desc-row { display: flex; gap: 8px; align-items: flex-start; }
+.desc-row textarea { flex: 1; }
+.api-notice { font-size: 11px; color: #888; margin-top: 4px; font-style: italic; }
+.config-section { background: #f9f7f3; border-radius: 8px; padding: 12px; margin-bottom: 12px; border: 0.5px solid #e0ddd8; }
+.key-input-row { display: flex; gap: 8px; align-items: center; }
+.key-input-row input { flex: 1; font-family: monospace; font-size: 12px; }
+.key-saved { font-size: 11px; color: #0F6E56; margin-top: 4px; display: none; }
+.empty-state { text-align: center; padding: 3rem; color: #888; font-family: 'Playfair Display', serif; font-style: italic; font-size: 16px; grid-column: 1/-1; }
+@media (max-width: 600px) { .stats-row { grid-template-columns: repeat(4, 1fr); } .books-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="lib-app">
+  <div class="lib-header">
+    <h1>Mi Biblioteca</h1>
+    <p>Registro personal de lecturas</p>
+    <div class="sync-status sync-loading" id="syncStatus">Conectando...</div>
+  </div>
+  <div class="stats-row" id="statsRow"></div>
+  <div style="margin-bottom:1.5rem;">
+    <input type="text" id="searchInput" placeholder="Buscar por título o autor..." oninput="window.renderBooks()" style="width:100%;padding:8px 12px;font-size:14px;border:0.5px solid #ccc;border-radius:8px;background:#fff;color:#1a1a1a;font-family:Lato,sans-serif;margin-bottom:10px;box-sizing:border-box;">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+      <select id="filterStatus" style="display:none;">
+        <option value="all">Todos los estados</option>
+        <option value="reading">Leyendo</option>
+        <option value="done">Terminados</option>
+        <option value="pending">Pendientes</option>
+        <option value="recommended">Recomendados</option>
+        <option value="lent">Prestados</option>
+        <option value="sample">Samples</option>
+      </select>
+      <button onclick="window.openConfig()" style="padding:8px 12px;font-size:13px;border:0.5px solid #ccc;border-radius:8px;background:transparent;color:#666;cursor:pointer;font-family:Lato,sans-serif;">⚙ API Key</button>
+      <button onclick="window.openModal()" style="padding:8px 14px;font-size:13px;font-family:Lato,sans-serif;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;border:0.5px solid #666;border-radius:8px;background:#fff;color:#1a1a1a;cursor:pointer;">+ Agregar</button>
+    </div>
+  </div>
+  <div class="books-grid" id="booksGrid"></div>
+</div>
+
+<div class="modal-overlay" id="configOverlay">
+  <div class="modal">
+    <h2>Configuración</h2>
+    <div class="config-section">
+      <div class="rec-section-title">API Key de Anthropic</div>
+      <p style="font-size:13px;color:#666;margin-bottom:10px;line-height:1.5;">Ingresa tu API Key para activar las descripciones automáticas. Se guarda solo en este navegador.</p>
+      <div class="key-input-row">
+        <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-...">
+        <button class="btn-primary" onclick="window.saveApiKey()">Guardar</button>
+      </div>
+      <div class="key-saved" id="keySaved">✓ API Key guardada correctamente</div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="window.closeConfig()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h2 id="modalTitle">Agregar libro</h2>
+    <div class="form-row"><label>Título</label><input type="text" id="fTitle" placeholder="Título del libro"></div>
+    <div class="form-row"><label>Autor</label><input type="text" id="fAuthor" placeholder="Nombre del autor"></div>
+    <div class="form-row-2">
+      <div class="form-row"><label>Estado</label>
+        <select id="fStatus" onchange="window.toggleRecFields()">
+          <option value="reading">Leyendo</option>
+          <option value="done">Terminado</option>
+          <option value="pending">Pendiente</option>
+          <option value="recommended">Recomendado</option>
+          <option value="lent">Prestado</option>
+          <option value="sample">Sample</option>
+        </select>
+      </div>
+      <div class="form-row"><label>Formato</label>
+        <select id="fFormat">
+          <option value="Kindle">Kindle</option>
+          <option value="Papel">Papel</option>
+          <option value="Audiolibro">Audiolibro</option>
+        </select>
+      </div>
+    </div>
+    <div class="rec-section" id="recFields" style="display:none">
+      <div class="rec-section-title">Datos de la recomendación</div>
+      <div class="form-row"><label>Recomendado por</label><input type="text" id="fRecBy" placeholder="Ej: Claude, un amigo..."></div>
+      <div class="form-row"><label>Fuente o contexto</label><input type="text" id="fRecSource" placeholder="Ej: Conversación sobre IA..."></div>
+    </div>
+    <div class="rec-section" id="lentFields" style="display:none">
+      <div class="rec-section-title">Datos del préstamo</div>
+      <div class="form-row"><label>Prestado a</label><input type="text" id="fLentTo" placeholder="Nombre de la persona"></div>
+      <div class="form-row"><label>Fecha del préstamo</label><input type="text" id="fLentDate" placeholder="Ej: marzo 2026"></div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-row"><label>Idioma</label>
+        <select id="fLang">
+          <option value="Inglés">Inglés</option>
+          <option value="Español">Español</option>
+          <option value="Otro">Otro</option>
+        </select>
+      </div>
+      <div class="form-row"><label>Valoración</label>
+        <select id="fRating">
+          <option value="0">Sin valorar</option>
+          <option value="1">★</option><option value="2">★★</option>
+          <option value="3">★★★</option><option value="4">★★★★</option>
+          <option value="5">★★★★★</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Descripción del libro</label>
+      <div class="desc-row">
+        <textarea id="fDescription" placeholder="Breve sinopsis..." style="min-height:80px"></textarea>
+        <button class="btn-generate" id="btnGenerate" onclick="window.generateDescription()">Generar<br>con IA</button>
+      </div>
+      <div class="api-notice" id="apiNotice"></div>
+    </div>
+    <div class="form-row"><label>Notas personales</label><textarea id="fNotes" placeholder="Lo que te dejó el libro..."></textarea></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="window.closeModal()">Cancelar</button>
+      <button class="btn-primary" onclick="window.saveBook()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+var books = [];
+var editingId = null;
+var apiKey = '';
+var initialized = false;
+var db, colRef;
+
+var INITIAL_BOOKS = [
+  {id:"1",title:"The Magic Mountain",author:"Thomas Mann",status:"reading",format:"Papel",lang:"Inglés",rating:0,description:"Novela filosófica monumental ambientada en un sanatorio suizo antes de la Primera Guerra Mundial, donde Hans Castorp reflexiona sobre el tiempo, la enfermedad y la condición humana.",notes:"En curso.",recBy:"",recSource:"",lentTo:"",lentDate:""},
+  {id:"2",title:"Exodus",author:"Peter F. Hamilton",status:"reading",format:"Kindle",lang:"Inglés",rating:0,description:"",notes:"En curso.",recBy:"",recSource:"",lentTo:"",lentDate:""},
+  {id:"3",title:"Keith Jarrett: A Biography",author:"Wolfgang Sandner",status:"reading",format:"Papel",lang:"Inglés",rating:0,description:"Biografía del pianista de jazz Keith Jarrett, explorando su vida, su proceso creativo y las circunstancias legendarias detrás de grabaciones como The Köln Concert.",notes:"Favorito: The Köln Concert.",recBy:"",recSource:"",lentTo:"",lentDate:""},
+  {id:"4",title:"The Remains of the Day",author:"Kazuo Ishiguro",status:"done",format:"Papel",lang:"Inglés",rating:5,description:"Un mayordomo inglés recorre el campo reflexionando sobre su vida de servicio, la dignidad profesional y los sentimientos reprimidos durante décadas.",notes:"",recBy:"",recSource:"",lentTo:"",lentDate:""},
+  {id:"5",title:"Klara and the Sun",author:"Kazuo Ishiguro",status:"done",format:"Papel",lang:"Inglés",rating:5,description:"Una robot amiga artificial observa el mundo desde la vitrina de una tienda mientras espera ser adoptada, reflexionando sobre el amor, la conciencia y qué significa ser humano.",notes:"Extraordinaria reflexión sobre la conciencia.",recBy:"",recSource:"",lentTo:"",lentDate:""},
+  {id:"6",title:"Never Let Me Go",author:"Kazuo Ishiguro",status:"done",format:"Papel",lang:"Inglés",rating:5,description:"Tres amigos criados en una escuela inglesa descubren gradualmente su destino como donantes de órganos, en una meditación sobre la memoria, la mortalidad y el amor.",notes:"Devastadoramente bella.",recBy:"",recSource:"",lentTo:"",lentDate:""},
+  {id:"7",title:"Machines Like Me",author:"Ian McEwan",status:"done",format:"Papel",lang:"Inglés",rating:4,description:"En una Londres alternativa de los 80, un hombre compra uno de los primeros androides con IA, desencadenando un triángulo amoroso y profundos dilemas éticos sobre conciencia y moralidad.",notes:"Dilemas éticos sobre IA muy vigentes.",recBy:"",recSource:"",lentTo:"",lentDate:""},
+  {id:"8",title:"Speak",author:"Louisa Hall",status:"recommended",format:"Kindle",lang:"Inglés",rating:0,description:"Cinco voces a través de los siglos convergen en torno a la pregunta de qué significa realmente comunicarse, con Alan Turing como uno de sus narradores.",notes:"",recBy:"Claude",recSource:"Conversación sobre literatura e IA — marzo 2026",lentTo:"",lentDate:""},
+  {id:"9",title:"Exhalation: Stories",author:"Ted Chiang",status:"recommended",format:"Kindle",lang:"Inglés",rating:0,description:"Colección de relatos de ciencia ficción filosófica sobre libre albedrío, memoria y conciencia. La historia Story of Your Life inspiró la película Arrival.",notes:"",recBy:"Claude",recSource:"Conversación sobre literatura e IA — marzo 2026",lentTo:"",lentDate:""},
+  {id:"10",title:"The Age of AI",author:"Kissinger, Schmidt & Huttenlocher",status:"recommended",format:"Kindle",lang:"Inglés",rating:0,description:"Tres perspectivas sobre cómo la inteligencia artificial transforma la sociedad, la geopolítica y el significado de ser humano.",notes:"",recBy:"Claude",recSource:"Conversación sobre literatura e IA — marzo 2026",lentTo:"",lentDate:""},
+  {id:"11",title:"Human Compatible",author:"Stuart Russell",status:"recommended",format:"Kindle",lang:"Inglés",rating:0,description:"El pionero de la IA Stuart Russell argumenta que debemos rediseñar la IA desde sus fundamentos para garantizar que sea compatible con los valores humanos.",notes:"",recBy:"Claude",recSource:"Conversación sobre literatura e IA — marzo 2026",lentTo:"",lentDate:""}
+];
+
+function setSyncStatus(msg, type) {
+  var el = document.getElementById('syncStatus');
+  el.textContent = msg;
+  el.className = 'sync-status sync-' + type;
+}
+
+window.renderBooks = function() {
+  var q = document.getElementById('searchInput').value.toLowerCase();
+  var fs = document.getElementById('filterStatus').value;
+  var filtered = books.filter(function(b) {
+    var matchQ = !q || b.title.toLowerCase().indexOf(q) >= 0 || b.author.toLowerCase().indexOf(q) >= 0;
+    var matchS = fs === 'all' || b.status === fs;
+    return matchQ && matchS;
+  });
+  var grid = document.getElementById('booksGrid');
+  if (!filtered.length) { grid.innerHTML = '<div class="empty-state">No hay libros que coincidan.</div>'; return; }
+  var sLabel = {reading:'Leyendo',done:'Terminado',pending:'Pendiente',recommended:'Recomendado',lent:'Prestado',sample:'Sample'};
+  var sClass = {reading:'badge-reading',done:'badge-done',pending:'badge-pending',recommended:'badge-recommended',lent:'badge-lent',sample:'badge-sample'};
+  function stars(n) { return n > 0 ? '★'.repeat(n)+'☆'.repeat(5-n) : ''; }
+  grid.innerHTML = filtered.map(function(b) {
+    return '<div class="book-card status-'+b.status+'">'+
+      '<div class="book-status-bar"></div>'+
+      '<div class="book-title">'+b.title+'</div>'+
+      '<div class="book-author">'+b.author+'</div>'+
+      '<div class="book-meta">'+
+        '<span class="badge '+sClass[b.status]+'">'+sLabel[b.status]+'</span>'+
+        '<span class="badge badge-format">'+b.format+'</span>'+
+        '<span class="badge badge-format">'+b.lang+'</span>'+
+      '</div>'+
+      (b.rating>0?'<div class="book-stars">'+stars(b.rating)+'</div>':'')+
+      (b.description?'<div class="book-description">'+b.description+'</div>':'')+
+      (b.status==='recommended'&&b.recBy?'<div class="book-rec-source">Recomendado por <span>'+b.recBy+'</span>'+(b.recSource?' · '+b.recSource:'')+'</div>':'')+
+      (b.status==='lent'&&b.lentTo?'<div class="book-rec-source">Prestado a <span style="color:#1565C0">'+b.lentTo+'</span>'+(b.lentDate?' · '+b.lentDate:'')+'</div>':'')+
+      (b.notes?'<div class="book-notes">'+b.notes+'</div>':'')+
+      '<div class="book-actions">'+
+        '<button class="btn-sm" onclick="window.editBook(\''+b.id+'\')">Editar</button>'+
+        '<button class="btn-sm btn-del" onclick="window.deleteBook(\''+b.id+'\')">Eliminar</button>'+
+      '</div></div>';
+  }).join('');
+};
+
+function renderStats() {
+  var total=books.length, reading=0, done=0, pending=0, recommended=0, lent=0, sample=0;
+  books.forEach(function(b){
+    if(b.status==='reading') reading++;
+    else if(b.status==='done') done++;
+    else if(b.status==='pending') pending++;
+    else if(b.status==='recommended') recommended++;
+    else if(b.status==='lent') lent++;
+    else if(b.status==='sample') sample++;
+  });
+  function sCard(filter, num, label, color) {
+    var sel = document.getElementById('filterStatus').value === filter;
+    return '<div class="stat-card" onclick="window.filterByCard(\''+filter+'\')" style="cursor:pointer;'+(sel?'border-color:'+color+';box-shadow:0 0 0 2px '+color+'30;':'')+'">'
+      +'<div class="stat-num" style="color:'+color+'">'+num+'</div>'
+      +'<div class="stat-label">'+label+'</div></div>';
+  }
+  document.getElementById('statsRow').innerHTML =
+    sCard('all', total, 'Total', '#1a1a1a')+
+    sCard('reading', reading, 'Leyendo', '#1D9E75')+
+    sCard('done', done, 'Terminados', '#534AB7')+
+    sCard('pending', pending, 'Pendientes', '#888780')+
+    sCard('recommended', recommended, 'Recomendados', '#BA7517')+
+    sCard('lent', lent, 'Prestados', '#1565C0')+
+    sCard('sample', sample, 'Samples', '#0097A7');
+}
+
+function render() { renderStats(); window.renderBooks(); }
+
+window.filterByCard = function(filter) {
+  document.getElementById('filterStatus').value = filter;
+  render();
+};
+
+window.openConfig = function() {
+  try { apiKey = localStorage.getItem('biblioteca_apikey') || ''; } catch(e) {}
+  if (apiKey) document.getElementById('apiKeyInput').value = apiKey;
+  document.getElementById('configOverlay').classList.add('open');
+};
+window.closeConfig = function() { document.getElementById('configOverlay').classList.remove('open'); };
+window.saveApiKey = function() {
+  var val = document.getElementById('apiKeyInput').value.trim();
+  if (!val) return;
+  apiKey = val;
+  try { localStorage.setItem('biblioteca_apikey', val); } catch(e) {}
+  document.getElementById('keySaved').style.display = 'block';
+  setTimeout(function(){ document.getElementById('keySaved').style.display='none'; }, 2000);
+};
+
+window.generateDescription = function() {
+  var title = document.getElementById('fTitle').value.trim();
+  var author = document.getElementById('fAuthor').value.trim();
+  if (!title||!author) { document.getElementById('apiNotice').textContent='Ingresa título y autor primero.'; return; }
+  if (!apiKey) { try { apiKey = localStorage.getItem('biblioteca_apikey')||''; } catch(e){} }
+  if (!apiKey) { document.getElementById('apiNotice').textContent='Configura tu API Key primero.'; return; }
+  var btn = document.getElementById('btnGenerate');
+  btn.disabled=true; btn.textContent='Generando...';
+  document.getElementById('apiNotice').textContent='';
+  fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:200,messages:[{role:'user',content:'Escribe una sinopsis breve (máximo 3 oraciones) del libro "'+title+'" de '+author+'. Solo la sinopsis, sin introducción ni comentarios adicionales.'}]})
+  }).then(function(r){return r.json();}).then(function(data){
+    if(data.content&&data.content[0]&&data.content[0].text){
+      document.getElementById('fDescription').value=data.content[0].text;
+    } else { document.getElementById('apiNotice').textContent='No se pudo generar. Verifica tu API Key.'; }
+    btn.disabled=false; btn.innerHTML='Generar<br>con IA';
+  }).catch(function(){
+    document.getElementById('apiNotice').textContent='Error de conexión.';
+    btn.disabled=false; btn.innerHTML='Generar<br>con IA';
+  });
+};
+
+window.toggleRecFields = function() {
+  var s = document.getElementById('fStatus').value;
+  document.getElementById('recFields').style.display = s === 'recommended' ? 'block' : 'none';
+  document.getElementById('lentFields').style.display = s === 'lent' ? 'block' : 'none';
+};
+
+window.openModal = function(id) {
+  id = id || null; editingId = id;
+  var b = id ? books.find(function(x){return String(x.id)===String(id);}) : null;
+  document.getElementById('modalTitle').textContent = id?'Editar libro':'Agregar libro';
+  document.getElementById('fTitle').value = b?b.title:'';
+  document.getElementById('fAuthor').value = b?b.author:'';
+  document.getElementById('fStatus').value = b?b.status:'pending';
+  document.getElementById('fFormat').value = b?b.format:'Kindle';
+  document.getElementById('fLang').value = b?b.lang:'Inglés';
+  document.getElementById('fRating').value = b?b.rating:0;
+  document.getElementById('fDescription').value = b?(b.description||''):'';
+  document.getElementById('fNotes').value = b?b.notes:'';
+  document.getElementById('fRecBy').value = b?(b.recBy||''):'';
+  document.getElementById('fRecSource').value = b?(b.recSource||''):'';
+  document.getElementById('fLentTo').value = b?(b.lentTo||''):'';
+  document.getElementById('fLentDate').value = b?(b.lentDate||''):'';
+  document.getElementById('apiNotice').textContent='';
+  window.toggleRecFields();
+  document.getElementById('modalOverlay').classList.add('open');
+};
+
+window.closeModal = function() { document.getElementById('modalOverlay').classList.remove('open'); editingId=null; };
+window.editBook = function(id) { window.openModal(id); };
+window.deleteBook = function(id) {
+  if (!confirm('¿Eliminar este libro?')) return;
+  setSyncStatus('Eliminando...','loading');
+  colRef.doc(String(id)).delete()
+    .then(function(){setSyncStatus('✓ Sincronizado','ok');})
+    .catch(function(){setSyncStatus('Error al eliminar','err');});
+};
+window.saveBook = function() {
+  var title=document.getElementById('fTitle').value.trim();
+  var author=document.getElementById('fAuthor').value.trim();
+  if(!title||!author){alert('Título y autor son obligatorios.');return;}
+  var book={
+    id:editingId?String(editingId):String(Date.now()),
+    title:title,author:author,
+    status:document.getElementById('fStatus').value,
+    format:document.getElementById('fFormat').value,
+    lang:document.getElementById('fLang').value,
+    rating:parseInt(document.getElementById('fRating').value),
+    description:document.getElementById('fDescription').value.trim(),
+    notes:document.getElementById('fNotes').value.trim(),
+    recBy:document.getElementById('fRecBy').value.trim(),
+    recSource:document.getElementById('fRecSource').value.trim(),
+    lentTo:document.getElementById('fLentTo').value.trim(),
+    lentDate:document.getElementById('fLentDate').value.trim()
+  };
+  window.closeModal();
+  setSyncStatus('Guardando...','loading');
+  colRef.doc(String(book.id)).set(book)
+    .then(function(){setSyncStatus('✓ Sincronizado','ok');})
+    .catch(function(){setSyncStatus('Error al guardar','err');});
+};
+
+document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)window.closeModal();});
+document.getElementById('configOverlay').addEventListener('click',function(e){if(e.target===this)window.closeConfig();});
+
+try { apiKey = localStorage.getItem('biblioteca_apikey')||''; } catch(e) {}
+
+var firebaseConfig = {
+  apiKey: "AIzaSyALC_gWQgWVo4DgIsHR-E57nNGE7bjqsqo",
+  authDomain: "mi-biblioteca-4652c.firebaseapp.com",
+  projectId: "mi-biblioteca-4652c",
+  storageBucket: "mi-biblioteca-4652c.firebasestorage.app",
+  messagingSenderId: "820593188553",
+  appId: "1:820593188553:web:a6963873fe98f7f32c7718"
+};
+
+firebase.initializeApp(firebaseConfig);
+db = firebase.firestore();
+colRef = db.collection("libros");
+
+colRef.onSnapshot(function(snapshot) {
+  if (!initialized && snapshot.empty) {
+    setSyncStatus('Cargando biblioteca inicial...','loading');
+    var batch = db.batch();
+    INITIAL_BOOKS.forEach(function(b){ batch.set(colRef.doc(b.id), b); });
+    batch.commit()
+      .then(function(){initialized=true; setSyncStatus('✓ Sincronizado','ok');})
+      .catch(function(){setSyncStatus('Error al inicializar','err');});
+    return;
+  }
+  initialized = true;
+  books = snapshot.docs.map(function(d){return d.data();});
+  books.sort(function(a,b){return String(a.id).localeCompare(String(b.id));});
+  render();
+  setSyncStatus('✓ Sincronizado','ok');
+}, function(){
+  setSyncStatus('Error de conexión','err');
+});
+</script>
+</body>
+</html>
