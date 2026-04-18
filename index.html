@@ -46,6 +46,7 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
 .badge-lent { background: #E3F0FD; color: #0D47A1; }
 .badge-sample { background: #E0F7FA; color: #006064; }
 .badge-format { background: #f0ede8; color: #666; }
+.badge-genre { background: #f0ede8; color: #444; font-style: italic; }
 .book-stars { padding-left: 12px; margin-bottom: 8px; font-size: 14px; letter-spacing: 2px; color: #BA7517; }
 .book-rec-source { font-size: 12px; color: #888; padding-left: 12px; margin-bottom: 8px; font-style: italic; }
 .book-rec-source span { color: #BA7517; }
@@ -181,6 +182,13 @@ body { font-family: 'Lato', sans-serif; background: #f5f3ee; min-height: 100vh; 
       </div>
     </div>
     <div class="form-row">
+      <label>Género</label>
+      <div class="desc-row">
+        <input type="text" id="fGenre" placeholder="Ej: Ficción, Historia, Ciencia ficción...">
+        <button class="btn-generate" id="btnGenreDetect" onclick="window.detectGenre()">Detectar<br>con IA</button>
+      </div>
+    </div>
+    <div class="form-row">
       <label>Descripción del libro</label>
       <div class="desc-row">
         <textarea id="fDescription" placeholder="Breve sinopsis..." style="min-height:80px"></textarea>
@@ -247,6 +255,7 @@ window.renderBooks = function() {
         '<span class="badge '+sClass[b.status]+'">'+sLabel[b.status]+'</span>'+
         '<span class="badge badge-format">'+b.format+'</span>'+
         '<span class="badge badge-format">'+b.lang+'</span>'+
+        (b.genre?'<span class="badge badge-genre">'+b.genre+'</span>':'')+
       '</div>'+
       (b.rating>0?'<div class="book-stars">'+stars(b.rating)+'</div>':'')+
       (b.description?'<div class="book-description">'+b.description+'</div>':'')+
@@ -308,6 +317,28 @@ window.saveApiKey = function() {
   setTimeout(function(){ document.getElementById('keySaved').style.display='none'; }, 2000);
 };
 
+window.detectGenre = function() {
+  var title = document.getElementById('fTitle').value.trim();
+  var author = document.getElementById('fAuthor').value.trim();
+  if (!title||!author) { alert('Ingresa título y autor primero.'); return; }
+  if (!apiKey) { try { apiKey = localStorage.getItem('biblioteca_apikey')||''; } catch(e){} }
+  if (!apiKey) { alert('Configura tu API Key primero.'); return; }
+  var btn = document.getElementById('btnGenreDetect');
+  btn.disabled=true; btn.textContent='Detectando...';
+  fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:50,messages:[{role:'user',content:'¿Cuál es el género literario del libro "'+title+'" de '+author+'? Responde solo con el género, máximo 3 palabras, sin puntuación ni explicación. Ejemplos: Ficción, Ciencia ficción, Biografía, Historia, Ensayo, No ficción.'}]})
+  }).then(function(r){return r.json();}).then(function(data){
+    if(data.content&&data.content[0]&&data.content[0].text){
+      document.getElementById('fGenre').value=data.content[0].text.trim();
+    }
+    btn.disabled=false; btn.innerHTML='Detectar<br>con IA';
+  }).catch(function(){
+    btn.disabled=false; btn.innerHTML='Detectar<br>con IA';
+  });
+};
+
 window.generateDescription = function() {
   var title = document.getElementById('fTitle').value.trim();
   var author = document.getElementById('fAuthor').value.trim();
@@ -354,6 +385,7 @@ window.openModal = function(id) {
   document.getElementById('fRecSource').value = b?(b.recSource||''):'';
   document.getElementById('fLentTo').value = b?(b.lentTo||''):'';
   document.getElementById('fLentDate').value = b?(b.lentDate||''):'';
+  document.getElementById('fGenre').value = b?(b.genre||''):'';
   document.getElementById('apiNotice').textContent='';
   window.toggleRecFields();
   document.getElementById('modalOverlay').classList.add('open');
@@ -384,7 +416,8 @@ window.saveBook = function() {
     recBy:document.getElementById('fRecBy').value.trim(),
     recSource:document.getElementById('fRecSource').value.trim(),
     lentTo:document.getElementById('fLentTo').value.trim(),
-    lentDate:document.getElementById('fLentDate').value.trim()
+    lentDate:document.getElementById('fLentDate').value.trim(),
+    genre:document.getElementById('fGenre').value.trim()
   };
   window.closeModal();
   setSyncStatus('Guardando...','loading');
